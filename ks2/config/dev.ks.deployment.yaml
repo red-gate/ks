@@ -3,25 +3,32 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: ksweb
-  name: ksweb
+    run: ks2web
+  name: ks2web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: ksweb
+      run: ks2web
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: ksweb
+        run: ks2web
     spec:
       containers:
-      - image: kswebimage:latest
-        name: ksweb
+      - image: ks2webimage:latest
+        name: ks2web
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
         resources: {}
+        volumeMounts:
+          - mountPath: /app/src
+            name: frontend
+      volumes:
+      - name: frontend
+        hostPath:
+          path: /mounted-ks2-app-src/app/src
 status: {}

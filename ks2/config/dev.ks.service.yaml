@@ -3,15 +3,15 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: ksweb
-  name: ksweb
+    run: ks2web
+  name: ks2web
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 3000
   selector:
-    run: ksweb
+    run: ks2web
   type: LoadBalancer
 status:
   loadBalancer: {}
