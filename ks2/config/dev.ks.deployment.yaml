@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ksweb
+  name: ksweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: ksweb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: ksweb
+    spec:
+      containers:
+      - image: kswebimage:latest
+        name: ksweb
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        resources: {}
+status: {}
