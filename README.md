@@ -22,6 +22,7 @@ To deploy, scale and manage containerized applications.
 ## Evolution of our app
 
 1. [ks1: build a React app with kubernetes](./ks1/ks1.md)
+1. [ks2: make minikube detect code changes](./ks2/ks2.md)
 1. add a python web server that hosts an API
 1. hook frontend and backend together
 1. serve website (in a simple case as a webserver with frontend and api)
