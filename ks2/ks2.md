@@ -29,6 +29,7 @@ The objective here is to try to obtain the same development experience as `yarn 
     ```
 
     resources:
+
     * [ReactJs development on docker container](https://stackoverflow.com/questions/42976296/reactjs-development-on-docker-container/43065210#43065210)
     * [npm start doesn’t detect changes](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-start-doesnt-detect-changes)
 
@@ -46,7 +47,7 @@ The objective here is to try to obtain the same development experience as `yarn 
 
     ```bash
     ➜ minikube mount ./app/src:/mounted-ks2-app-src
-    Mounting ./app/src into /k8s-mounted-app-ks2 on the minikube VM
+    Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
     This daemon process needs to stay alive for the mount to still be accessible...
     ufs starting
     ```
