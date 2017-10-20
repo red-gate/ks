@@ -114,7 +114,7 @@ This should serve your website at `http://localhost:3000/`
 
     File: `dev.ks.deployment.yaml`
 
-    ```yaml
+    ```dockerfile
     apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
