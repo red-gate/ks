@@ -90,7 +90,7 @@ This should serve your website at `http://localhost:3000/`
 
     The web docker image is based on the following docker file:
 
-    ```yaml
+    ```dockerfile
     FROM node:8.6.0
 
     ADD ./app /app
@@ -114,7 +114,7 @@ This should serve your website at `http://localhost:3000/`
 
     File: `dev.ks.deployment.yaml`
 
-    ```dockerfile
+    ```yaml
     apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
