@@ -1,5 +1,7 @@
 # Kubernetes series part 1
 
+The objective here is to create a minimal react app and hook it up to kubernetes.
+
 ## Build a React app
 
 * we start with a minimal react application using [create react app](https://github.com/facebookincubator/create-react-app) as our baseline.
