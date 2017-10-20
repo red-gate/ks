@@ -90,7 +90,7 @@ This should serve your website at `http://localhost:3000/`
 
     The web docker image is based on the following docker file:
 
-    ```docker
+    ```yaml
     FROM node:8.6.0
 
     ADD ./app /app
