@@ -1,6 +1,6 @@
 # Kubernetes series part 2
 
-The objective here is to try to obtain the same development experience as `yarn start` but using kubernetes.
+The objective here is to try to obtain a similar development experience as `yarn start` but using kubernetes.
 
 1. start minikube
 
@@ -22,20 +22,20 @@ The objective here is to try to obtain the same development experience as `yarn 
 
 1. define CHOKIDAR_USEPOLLING in app folder
 
-    create a `.env` inside the `app` folder with the following values:
+    create a `.env` file inside the `app` folder with the following values:
 
     ```bash
     CHOKIDAR_USEPOLLING=true
     ```
 
-    resources:
+    why do you need this?
 
     * [ReactJs development on docker container](https://stackoverflow.com/questions/42976296/reactjs-development-on-docker-container/43065210#43065210)
     * [npm start doesn’t detect changes](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-start-doesnt-detect-changes)
 
     > If the project runs inside a virtual machine such as (a Vagrant provisioned) VirtualBox, create an .env file in your project directory if it doesn’t exist, and add `CHOKIDAR_USEPOLLING=true` to it. This ensures that the next time you run npm start, the watcher uses the polling mode, as necessary inside a VM.
 
-1. create docker image
+1. create the ks2webimage docker image
 
     ```bash
     docker build -f ./web/Dockerfile -t ks2webimage .
@@ -46,17 +46,19 @@ The objective here is to try to obtain the same development experience as `yarn 
     In a _separate_ terminal, in the root of the project (this terminal needs to keep running the **whole** time you're debugging...).
 
     ```bash
+    ➜ pwd
+        ~/dev/github/santiaago/ks/ks2
     ➜ minikube mount ./app/src:/mounted-ks2-app-src
-    Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
-    This daemon process needs to stay alive for the mount to still be accessible...
-    ufs starting
+        Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
+        This daemon process needs to stay alive for the mount to still be accessible...
+        ufs starting
     ```
 
     For more information about mounting volumes read these [docs](https://github.com/kubernetes/minikube/blob/master/docs/host_folder_mount.md)
 
 1. reference volume in deployment file
 
-    Define your new volume next to images in the deployment file.
+    Define your new volume next to `image` section in the deployment `.yaml` file.
 
     ```yaml
     - name: frontend
@@ -90,7 +92,7 @@ The objective here is to try to obtain the same development experience as `yarn 
       ks2web-2024024258-2fc0t   1/1       Running   0          10s
     ```
 
-    The `-w` stands for _watch_, so that you can see the different status changes of the pods.
+    The `-w` stands for _watch_, so that you can see the different status changes of the pods. You can hit `Ctrl+C` at any time to stop.
 
 1. service app
 
@@ -102,7 +104,7 @@ The objective here is to try to obtain the same development experience as `yarn 
 
 1. verify that hot reload works.
 
-    Make a change to app.js and notice the app reloads with latest code.
+    Make a change to `app.js` and notice the app reloads with the latest code.
 
 ## Issues detecting changes
 
