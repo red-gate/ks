@@ -113,6 +113,10 @@ The objective here is to try to obtain a similar development experience as `yarn
 
     Make a change to `app.js` and notice the app reloads with the latest code.
 
+## Is this mounting the perfect solution?
+
+No it is not, it only detects changes inside `./app/src` so adding a library to your app will probably catch the changes.
+
 ## Issues detecting changes
 
 If variable `CHOKIDAR_USEPOLLING=true` is not set
