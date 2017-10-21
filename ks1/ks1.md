@@ -6,10 +6,6 @@ The objective here is to create a minimal react app and hook it up to kubernetes
 
 * we start with a react application similar to the result of [create react app](https://github.com/facebookincubator/create-react-app) as our baseline.
 
-1. clone ks repo
-    ```bash
-    git clone https://github.com/santiaago/ks.git
-    ```
 1. build app
 
 ```bash

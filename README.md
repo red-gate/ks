@@ -19,6 +19,21 @@ To deploy, scale and manage containerized applications.
 * Kubernetes:
   * Follow this [tutorial](https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/) to set up kubernetes in your machine.
 
+## Structure of this repo
+
+* Each `ksx` folder (`ks1`, `ks2`, ...) contains a working example of the app we are building in this series.
+* They are all incremental, so `ksn` is based on `ksn-1`, etc..
+* instructions of each item of this series is in the `ksx.md` file.
+
+## Getting started
+
+1. clone ks repo
+    ```bash
+    git clone https://github.com/santiaago/ks.git
+    ```
+
+1. start following the series or go directly to the one you are interested in.
+
 ## Evolution of our app
 
 1. [ks1: build a React app with kubernetes](./ks1/ks1.md)
