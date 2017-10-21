@@ -27,6 +27,17 @@ spec:
         volumeMounts:
           - mountPath: /app/src
             name: frontend
+      - image: ks3webserverimage:latest
+        name: ks3webserver
+        imagePullPolicy: IfNotPresent
+        command: ["python"]
+        args: ["-m", "flask", "run"]
+        env:
+        - name: FLASK_DEBUG
+          value: "1"
+        ports:
+        - containerPort: 5000
+        resources: {}
       volumes:
       - name: frontend
         hostPath:
