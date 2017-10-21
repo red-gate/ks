@@ -4,7 +4,7 @@ The objective here is to create a minimal react app and hook it up to kubernetes
 
 ## Build a React app
 
-* we start with a minimal react application using [create react app](https://github.com/facebookincubator/create-react-app) as our baseline.
+* we start with a react application similar to the result of [create react app](https://github.com/facebookincubator/create-react-app) as our baseline.
 
 1. clone ks repo
     ```bash
@@ -60,9 +60,10 @@ This should serve your website at `http://localhost:3000/`
     eval $(docker-machine env -u)
     ```
 
-1. create web Dockerfile
+1. create apps Dockerfile
 
-    The web docker image is based on the following docker file:
+    The docker image is based on the following docker file
+    File: `./ks1/web/Dockerfile`
 
     ```dockerfile
     FROM node:8.6.0
@@ -86,7 +87,7 @@ This should serve your website at `http://localhost:3000/`
 
 1. create kubernetes deployment file
 
-    File: `dev.ks.deployment.yaml`
+    File: `./ks1/config/dev.ks.deployment.yaml`
 
     ```yaml
     apiVersion: extensions/v1beta1
@@ -120,7 +121,7 @@ This should serve your website at `http://localhost:3000/`
 
 1. create kubernetes service file
 
-    File: `dev.ks.service.yaml`
+    File: `./ks1/config/dev.ks.service.yaml`
 
     ```yaml
     apiVersion: v1
