@@ -2,6 +2,13 @@
 
 The objective here is to try to obtain a similar development experience as `yarn start` but using kubernetes.
 
+1. navigate to ks2
+
+    ```bash
+    ➜ pwd
+        ~/dev/github/santiaago/ks/ks2
+    ```
+
 1. start minikube
 
     ```bash
@@ -17,7 +24,7 @@ The objective here is to try to obtain a similar development experience as `yarn
     If you ever need to switch back to your machine's context do:
 
     ```bash
-    eval $(docker-machine env -u)
+    ➜ eval $(docker-machine env -u)
     ```
 
 1. define CHOKIDAR_USEPOLLING in app folder
@@ -38,7 +45,7 @@ The objective here is to try to obtain a similar development experience as `yarn
 1. create the ks2webimage docker image
 
     ```bash
-    docker build -f ./web/Dockerfile -t ks2webimage .
+    ➜ docker build -f ./web/Dockerfile -t ks2webimage .
     ```
 
 1. mount frontend source code
@@ -99,7 +106,7 @@ The objective here is to try to obtain a similar development experience as `yarn
     Get URL and navigate to it.
 
     ```bash
-    minikube service ks2web --url
+    ➜ minikube service ks2web --url
     ```
 
 1. verify that hot reload works.
