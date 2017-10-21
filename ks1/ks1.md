@@ -6,35 +6,42 @@ The objective here is to create a minimal react app and hook it up to kubernetes
 
 * we start with a react application similar to the result of [create react app](https://github.com/facebookincubator/create-react-app) as our baseline.
 
+1. navigate to ks1
+
+    ```bash
+    ➜ pwd
+        ~/dev/github/santiaago/ks/ks2
+    ```
+
 1. build app
 
-```bash
-➜ pwd
-    ~/dev/github/santiaago/ks
-➜ cd ks1/app
-➜ yarn
-    yarn install v1.1.0
-    [1/4] 🔍  Resolving packages...
-    [2/4] 🚚  Fetching packages...
-    [3/4] 🔗  Linking dependencies...
-    [4/4] 📃  Building fresh packages...
-    success Saved lockfile.
-    ✨  Done in 2.92s.
-➜ yarn start
-    Compiled successfully!
+    ```bash
+    ➜ pwd
+        ~/dev/github/santiaago/ks
+    ➜ cd ks1/app
+    ➜ yarn
+        yarn install v1.1.0
+        [1/4] 🔍  Resolving packages...
+        [2/4] 🚚  Fetching packages...
+        [3/4] 🔗  Linking dependencies...
+        [4/4] 📃  Building fresh packages...
+        success Saved lockfile.
+        ✨  Done in 2.92s.
+    ➜ yarn start
+        Compiled successfully!
 
-    You can now view app in the browser.
+        You can now view app in the browser.
 
-    Local:            http://localhost:3000/
-    On Your Network:  http://192.168.0.6:3000/
+        Local:            http://localhost:3000/
+        On Your Network:  http://192.168.0.6:3000/
 
-    Note that the development build is not optimized.
-    To create a production build, use yarn build.
-```
+        Note that the development build is not optimized.
+        To create a production build, use yarn build.
+    ```
 
-This should serve your website at `http://localhost:3000/`
+    This should serve your website at `http://localhost:3000/`
 
-![](./images/app.png)
+    ![](./images/app.png)
 
 ## Move app into kubernetes
 
@@ -53,7 +60,7 @@ This should serve your website at `http://localhost:3000/`
     If you ever need to switch back to your machine's context do:
 
     ```bash
-    eval $(docker-machine env -u)
+    ➜ eval $(docker-machine env -u)
     ```
 
 1. create apps Dockerfile
@@ -78,7 +85,7 @@ This should serve your website at `http://localhost:3000/`
 1. create the docker image
 
     ```bash
-    docker build -f ./web/Dockerfile -t kswebimage .
+    ➜ docker build -f ./web/Dockerfile -t kswebimage .
     ```
 
 1. create kubernetes deployment file
@@ -188,5 +195,5 @@ This should serve your website at `http://localhost:3000/`
 
     Get URL and navigate to it.
     ```bash
-    minikube service ksweb --url
+    ➜ minikube service ksweb --url
     ```
