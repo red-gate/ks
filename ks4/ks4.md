@@ -119,7 +119,11 @@ This will speed up our backend development cycles while still working with kuber
 1. check backend updates by changing the `hello.py` controller
 
     If you attach the logs with `-f` and update `./server/controllers/hello.py` you should see
-    `Detected change in '/server/controllers/hello.py', reloading` in the logs.
+
+    ```bash
+    Detected change in '/server/controllers/hello.py', reloading` in the logs.
+    ```
+
     If you then refresh the browser you should se the changes in the UI.
 
     ```bash
