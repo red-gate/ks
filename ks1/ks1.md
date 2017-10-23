@@ -16,9 +16,7 @@ The objective here is to create a minimal react app and hook it up to kubernetes
 1. build app
 
     ```bash
-    ➜ pwd
-        ~/dev/github/santiaago/ks
-    ➜ cd ks1/app
+    ➜ cd ./app
     ➜ yarn
         yarn install v1.1.0
         [1/4] 🔍  Resolving packages...
@@ -196,4 +194,31 @@ The objective here is to create a minimal react app and hook it up to kubernetes
     Get URL and navigate to it.
     ```bash
     ➜ minikube service ksweb --url
+    ```
+
+1. delete app
+
+    To delete deployment and service:
+
+    ```bash
+    ➜ kubectl delete -f ./config/dev.ks.deployment.yaml
+    ➜ kubectl delete -f ./config/dev.ks.service.yaml
+    ```
+
+    To delete image
+
+    ```bash
+    ➜ docker rmi kswebimage
+    ```
+
+    To switch context
+
+    ```bash
+    ➜ eval $(docker-machine env -u)
+    ```
+
+    To stop minikube
+
+    ```bash
+    ➜ minikube stop
     ```
