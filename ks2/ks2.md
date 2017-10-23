@@ -113,8 +113,39 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
 1. verify that hot reload works.
 
     Make a change to `app.js` and notice the app reloads with the latest code.
+    If you attach the logs to ks2web you should see the following message
 
-## Is this mounting the perfect solution?
+    ```bash
+    Compiling...
+    Compiled successfully!
+    ```
+
+    Full logs.
+    ```bash
+    ➜ kubectl logs ks2web-2024024258-2fc0t -f
+    yarn run v1.1.0
+    $ react-scripts start
+    Starting the development server...
+
+    Compiled successfully!
+
+    You can now view app in the browser.
+
+    Local:            http://localhost:3000/
+    On Your Network:  http://172.17.0.3:3000/
+
+    Note that the development build is not optimized.
+    To create a production build, use yarn build.
+
+    Compiling...
+    Compiled successfully!
+    Compiling...
+    Compiled successfully!
+    ```
+
+    Also the app should auto update automatically.
+
+## Is this mounting the perfect solution
 
 No it is not, it only detects changes inside `./app/src` so adding a library to your app will probably catch the changes.
 
