@@ -116,6 +116,32 @@ This will speed up our backend development cycles while still working with kuber
     ➜ minikube service ks4web --url
     ```
 
-1. check frontend hotreload by changing `App.js`
-
 1. check backend updates by changing the `hello.py` controller
+
+    If you attach the logs with `-f` and update `./server/controllers/hello.py` you should see
+    `Detected change in '/server/controllers/hello.py', reloading` in the logs.
+    If you then refresh the browser you should se the changes in the UI.
+
+    ```bash
+    ➜ kubectl logs ks4web-2671084145-gtz9q ks4webserver -f
+        * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+        * Restarting with stat
+        /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
+        warn(RuntimeWarning(msg))
+        * Debugger is active!
+        * Debugger PIN: 207-014-748
+        --------------------------------------------------------------------------------
+        INFO in hello [/server/controllers/hello.py:8]:
+        hello controller called
+        --------------------------------------------------------------------------------
+        127.0.0.1 - - [23/Oct/2017 09:53:50] "GET /api/hello HTTP/1.1" 200 -
+        * Detected change in '/server/controllers/hello.py', reloading
+        * Restarting with stat
+        /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
+        warn(RuntimeWarning(msg))
+        * Debugger is active!
+        * Debugger PIN: 207-014-748
+        --------------------------------------------------------------------------------
+        INFO in hello [/server/controllers/hello.py:8]:
+        hello controller called
+    ```
