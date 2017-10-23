@@ -163,7 +163,7 @@ The objective here is to ...
         * Debugger is active!
         * Debugger PIN: 207-014-748
     ```
-1. navigate to `./app`
+1. service ks3web
 
     ```bash
     ➜ minikube service ks3web
@@ -171,6 +171,7 @@ The objective here is to ...
 
 1. we can now call the web server from our frontend code
 
+    * navigate to `./app`
     * we add a proxy to the `./app/package.json` file to `http://localhost:5000`
         `"proxy": "http://localhost:5000"`
     * add fetch api to frontend
