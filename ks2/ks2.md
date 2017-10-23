@@ -1,6 +1,7 @@
 # Kubernetes series part 2
 
 The objective here is to try to obtain a similar development experience as `yarn start` but using kubernetes.
+So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016/03/24/introducing-hot-reloading.html) when changing React code in the app.
 
 1. navigate to ks2
 
