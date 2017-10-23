@@ -38,8 +38,14 @@ spec:
         ports:
         - containerPort: 5000
         resources: {}
+        volumeMounts:
+          - mountPath: /server
+            name: python-server
       volumes:
+      - name: python-server
+        hostPath:
+          path: /mounted-ks4-src/server
       - name: frontend
         hostPath:
-          path: /mounted-ks4-app-src/app/src
+          path: /mounted-ks4-src/app/src
 status: {}
