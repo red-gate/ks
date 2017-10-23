@@ -150,3 +150,15 @@ This will speed up our backend development cycles while still working with kuber
     ```
 
     If you then refresh the browser you should se the changes in the UI.
+
+1. minikube mounted volume command should detect this changes
+
+    ```bash
+    ➜ minikube mount .:/mounted-ks4-src
+        Mounting . into /mounted-ks4-src on the minikube VM
+        This daemon process needs to stay alive for the mount to still be accessible...
+        ufs starting
+        Rename ./server/controllers/__pycache__/hello.cpython-35.pyc.140423133386000 to hello.cpython-35.pyc
+        rel  results in server/controllers/__pycache__/hello.cpython-35.pyc
+        rename ./server/controllers/__pycache__/hello.cpython-35.pyc.140423133386000 to server/controllers/__pycache__/hello.cpython-35.pyc gets <nil>
+    ```
