@@ -10,7 +10,7 @@ The objective here is to create a minimal react app and hook it up to kubernetes
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks2
+        ~/dev/github/santiaago/ks/ks1
     ```
 
 1. build app
