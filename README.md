@@ -40,6 +40,6 @@ To deploy, scale and manage containerized applications.
 1. [ks2: make minikube detect React code changes](./ks2/ks2.md)
 1. [ks3: add a python web server that hosts an API](./ks3/ks3.md)
 1. [ks4: make minikube detect Python code changes](./ks4/ks4.md)
-1. hook frontend and backend together
-1. serve website (in a simple case as a webserver with frontend and api)
-1. add a database
+1. create test environment
+1. add a database?...
+1. create a prod environment
