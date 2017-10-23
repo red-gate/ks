@@ -124,8 +124,7 @@ This will speed up our backend development cycles while still working with kuber
     Detected change in '/server/controllers/hello.py', reloading` in the logs.
     ```
 
-    If you then refresh the browser you should se the changes in the UI.
-
+    Full logs:
     ```bash
     ➜ kubectl logs ks4web-2671084145-gtz9q ks4webserver -f
         * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
@@ -149,3 +148,5 @@ This will speed up our backend development cycles while still working with kuber
         INFO in hello [/server/controllers/hello.py:8]:
         hello controller called
     ```
+
+    If you then refresh the browser you should se the changes in the UI.
