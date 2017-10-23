@@ -1,7 +1,7 @@
 # Kubernetes series part 4
 
 The objective here is to update our app so that we can detect python code changes on the fly.
-This will speed up development cycles.
+This will speed up our backend development cycles while still working with kubernetes in a development environment.
 
 1. navigate to ks4
 
@@ -40,20 +40,41 @@ This will speed up development cycles.
     ➜ docker build -f ./server/Dockerfile -t ks4webserverimage .
     ```
 
-1. mount frontend source code
+1. mount ks4 source code
 
     In a _separate_ terminal, in the root of the project (this terminal needs to keep running the **whole** time you're debugging...).
 
     ```bash
     ➜ pwd
         ~/dev/github/santiaago/ks/ks4
-    ➜ minikube mount .:/mounted-ks3-app-src
+    ➜ minikube mount .:/mounted-ks4-src
         Mounting ./app/src into /mounted-ks3-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...
         ufs starting
     ```
 
     For more information about mounting volumes read these [docs](https://github.com/kubernetes/minikube/blob/master/docs/host_folder_mount.md)
+
+1. update the deployment yaml file
+
+    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server volume that point to the python backend.
+    ```yaml
+    volumes:
+    - name: python-server
+    hostPath:
+        path: /mounted-ks4-src/server
+    - name: frontend
+    hostPath:
+        path: /mounted-ks4-src/app/src
+    ```
+
+    The reference it in the webserver image section
+
+    ```yaml
+    volumeMounts:
+    - mountPath: /server
+    name: python-server
+    ```
 
 1. create deployment and service
 
@@ -65,22 +86,22 @@ This will speed up development cycles.
         service "ks4web" created
     ➜ kubectl get all
         NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks4web   1         1         1            1           1m
+        deploy/ks4web   1         1         1            1           31s
 
         NAME                   DESIRED   CURRENT   READY     AGE
-        rs/ks4web-1748674206   1         1         1         1m
+        rs/ks4web-2671084145   1         1         1         31s
 
         NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks4web   1         1         1            1           1m
+        deploy/ks4web   1         1         1            1           31s
 
         NAME                         READY     STATUS    RESTARTS   AGE
-        po/ks4web-1748674206-g14vb   2/2       Running   0          1m
+        po/ks4web-2671084145-f0f71   2/2       Running   0          31s
     ```
 
 1. get web server logs
 
     ```bash
-    ➜ kubectl logs ks4web-1748674206-g14vb ks4webserver
+    ➜ kubectl logs ks4web-2671084145-f0f71 ks4webserver
         * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
         * Restarting with stat
         /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
@@ -89,44 +110,13 @@ This will speed up development cycles.
         * Debugger PIN: 207-014-748
     ```
 
-1. navigate to `./app`
-
-    ```bash
-    ➜ minikube service ks4web
-    ```
-
-1. we can now call the web server from our frontend code
-
-    * we add a proxy to the `./app/package.json` file to `http://localhost:5000`
-        `"proxy": "http://localhost:5000"`
-    * add fetch api to frontend
-        `yarn add whatwg-fetch`
-
-1. delete deployment and docker image
-
-    changes to the package.json are not taken into account when yarn start is running.
-    To do that you will have to delete your deployment and recreate your docker image.
-
-    ```bash
-    ➜ kubectl delete -f ./config/dev.ks.deployment.yaml
-    ➜ docker rmi ks4webimage
-    ```
-
-    Then recreate image and deployment.
-
-    ```bash
-    ➜ docker build -f ./web/Dockerfile -t ks4webimage .
-    ➜ kubectl create -f ./config/dev.ks.deployment.yaml
-    ```
-
-1. check app runs as expected
-
-    ```bash
-    ➜ kubectl get pods
-    ```
-
-1. service app with minikube
+1. service ks4web
 
     ```bash
     ➜ minikube service ks4web --url
     ```
+
+1. check frontend hotreload by changing `App.js`
+
+1. check backend updates by changing the `hello.py` controller
+
