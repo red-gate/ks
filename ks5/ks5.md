@@ -1,6 +1,8 @@
 # Kubernetes series part 5
 
-The objective here is to ...
+The objective here is to create a test environment - that is build the frontend and serve it in our python server as static resources.
+
+To do this we will create a separate deployment and we will enhance our python server to take the environment into account.
 
 1. navigate to ks5
 
