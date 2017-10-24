@@ -3,6 +3,19 @@
 The objective here is to update our app so that we can detect python code changes on the fly.
 This will speed up our backend development cycles while still working with kubernetes in a development environment.
 
+The flask development server has a nice reload experience:
+
+> The flask command line script (Command Line Interface) is strongly recommended for development because it provides a superior reload experience due to how it loads the application. The basic usage is like this:
+> ```bash
+> export FLASK_APP=my_application
+> export FLASK_DEBUG=1
+> flask run
+> ```
+
+From: [Source: Development Server](http://flask.pocoo.org/docs/0.12/server/)
+
+We will use this behaviour to get reload exeprience with the app we are building.
+
 1. navigate to ks4
 
     ```bash
@@ -57,7 +70,6 @@ This will speed up our backend development cycles while still working with kuber
 
 1. update the deployment yaml file
 
-    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server volume that point to the python backend.
     ```yaml
     volumes:
     - name: python-server
