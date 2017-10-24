@@ -68,7 +68,23 @@ We will use this behaviour to get reload exeprience with the app we are building
 
     For more information about mounting volumes read these [docs](https://github.com/kubernetes/minikube/blob/master/docs/host_folder_mount.md)
 
-1. update the deployment yaml file
+1. add environment variable to webserver section in deployment yaml file
+
+    As described in the [flask docs](http://flask.pocoo.org/docs/0.12/server/) we will add the `FLASK_DEBUG` environment variable to get the reloading experience we want.
+
+    ```yaml
+    command: ["python"]
+    args: ["-m", "flask", "run"]
+    env:
+    - name: FLASK_DEBUG
+        value: "1"
+    ports:
+    - containerPort: 5000
+    ```
+
+1. add the web server volumes to the deployment yaml file
+
+    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server volume that point to the python backend so that changes are picked up on save.
 
     ```yaml
     volumes:
