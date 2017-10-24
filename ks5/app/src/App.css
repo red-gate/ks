@@ -1,0 +1,10 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 2em;
+}
+
+.App-header{
+  display: flex;
+}
