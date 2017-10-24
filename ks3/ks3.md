@@ -107,9 +107,6 @@ The objective here is to ...
     imagePullPolicy: IfNotPresent
     command: ["python"]
     args: ["-m", "flask", "run"]
-    env:
-    - name: FLASK_DEBUG
-        value: "1"
     ports:
     - containerPort: 5000
     resources: {}
