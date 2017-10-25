@@ -9,7 +9,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 3000
+    targetPort: 5000
   selector:
     run: ks5web
   type: LoadBalancer

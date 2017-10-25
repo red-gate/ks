@@ -35,6 +35,8 @@ spec:
         env:
         - name: FLASK_DEBUG
           value: "1"
+        - name: FLASK_CONFIG
+          value: "dev"
         ports:
         - containerPort: 5000
         resources: {}
