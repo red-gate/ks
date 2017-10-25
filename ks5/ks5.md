@@ -4,6 +4,8 @@ The objective here is to create a test environment - that is build the frontend 
 
 To do this we will create a separate deployment and we will enhance our python server to take the environment into account.
 
+This means we will not use volumes in our `test` environment, only in our `dev` environment.
+
 1. navigate to ks5
 
     ```bash
@@ -29,10 +31,133 @@ To do this we will create a separate deployment and we will enhance our python s
     ➜ eval $(docker-machine env -u)
     ```
 
-1. build web docker image
+1. build frontend app
 
     ```bash
-    ➜ docker build -f ./web/Dockerfile -t ks5webimage .
+    ➜ cd app
+    ➜ yarn
+    ➜ yarn build
+        yarn run v1.1.0
+        $ react-scripts build
+        Creating an optimized production build...
+        Compiled successfully.
+
+        File sizes after gzip:
+
+        39.7 KB  build/static/js/main.2fba1481.js
+        175 B    build/static/css/main.5fcf01d3.css
+
+        ...
+        The build folder is ready to be deployed.
+        You may serve it with a static server:
+        ...
+        ✨  Done in 6.36s.
+    ```
+
+1. we update the web server to server our built app
+
+    ```python
+    'ks5 web server'
+
+    import logging
+    from os import getenv
+    from os.path import exists
+
+    import config
+
+    from flask import Flask
+    from flask import send_from_directory
+
+    import controllers.hello as controller_hello
+
+    app = Flask(__name__, static_folder='./app/build/static/')
+    app.logger.setLevel(logging.DEBUG)
+    config_name = getenv('FLASK_CONFIG', 'default')
+
+    if not config_name in config.config:
+        raise ValueError('Invalid FLASK_CONFIG "{}", choose one of {}'.format(
+            config_name,
+            str.join(', ', config.config.keys())))
+
+    app.config.from_object(config.config[config_name])
+    config.config[config_name].init_app(app)
+
+    app.add_url_rule('/api/hello', view_func=controller_hello.hello, methods=['GET'])
+
+    def serve_static_paths(current_app):
+        'configure static paths if in production mode'
+
+        current_app.logger.info('setting prod static paths')
+        if not current_app.config['SERVE_STATIC_FILES']:
+            current_app.logger.info('skipping serving static files based on config')
+            return
+        current_app.logger.info('serving up static files')
+        @current_app.route('/', defaults={'path': ''})
+        @current_app.route('/<path:path>')
+        def serve(path):
+            'serve static files'
+            if path == '':
+                return send_from_directory('./app/build/', 'index.html')
+            current_app.logger.warning('looking for :%s', ('./app/build/' + path))
+            if exists('./app/build/' + path):
+                return send_from_directory('./app/build/', path)
+            return send_from_directory('./app/build/', 'index.html')
+
+        current_app.logger.info('all ready, static paths set')
+
+    serve_static_paths(app)
+
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=5000)
+    ```
+
+    This reference a `./server/config.py` config module.
+
+    ```python
+    'ks5 config'
+    import logging
+
+    class Config(object):
+        'base class for application configuration details.'
+        SECRET_KEY = 'ks5'
+
+        @staticmethod
+        def init_app(app):
+            'init app'
+            pass
+    class DevelopmentConfig(Config):
+        'dev config'
+        DEBUG = True
+        LOGGING_LEVEL = logging.DEBUG
+        SERVE_STATIC_FILES = True
+        MODE = 'development'
+
+
+    class TestingConfig(Config):
+        'test config'
+        DEBUG = False
+        LOGGING_LEVEL = logging.INFO
+        SERVE_STATIC_FILES = True
+        MODE = 'production'
+
+    config = {
+        'dev': DevelopmentConfig,
+        'testing': TestingConfig,
+        'default': TestingConfig
+    }
+    ```
+
+1. we update the webserver dockerfile
+
+    To add the `app/build` folder when building the image.
+
+    ```dockerfile
+    WORKDIR ..
+
+    ADD ./server ./server
+    ADD ./app/build ./server/app/build
+
+    WORKDIR /server
     ```
 
 1. build web server docker image
@@ -41,89 +166,53 @@ To do this we will create a separate deployment and we will enhance our python s
     ➜ docker build -f ./server/Dockerfile -t ks5webserverimage .
     ```
 
-1. mount ks5 source code
+1. we add a `test.ks.deployment.yaml` file for our test environment
 
-    In a _separate_ terminal, in the root of the project (this terminal needs to keep running the **whole** time you're debugging...).
+    This deployment file only needs to reference the `webserver` as we no longer need a frontend image if we serve the react app from static files.
+
+    We can remove the following:
+    - the ks5web image section
+    - the volumes sections
+    - the python commands as we are not running in development
+
+    We can add a `FLASK_CONFIG`
+
+    ```yaml
+    - name: FLASK_CONFIG
+          value: "testing"
+    ```
+
+    ![test yaml diff ](./images/test.yaml.diff.png)
+
+1. modify `dev.ks.deployment.yaml` file
+
+    The development deployment config now needs the `FLASK_CONFIG` environment variable in order to load the development config.
+
+    ```yaml
+      - name: FLASK_CONFIG
+        value: "dev"
+    ```
+
+1. create the test deployment and service
 
     ```bash
-    ➜ pwd
-        ~/dev/github/santiaago/ks/ks5
-    ➜ minikube mount .:/mounted-ks5-src
-        Mounting ./app/src into /mounted-ks5-app-src on the minikube VM
-        This daemon process needs to stay alive for the mount to still be accessible...
-        ufs starting
-    ```
-
-    For more information about mounting volumes read these [docs](https://github.com/kubernetes/minikube/blob/master/docs/host_folder_mount.md)
-
-1. add environment variable to webserver section in deployment yaml file
-
-    As described in the [flask docs](http://flask.pocoo.org/docs/0.12/server/) we will add the `FLASK_DEBUG` environment variable to get the reloading experience we want.
-
-    ```yaml
-    command: ["python"]
-    args: ["-m", "flask", "run"]
-    env:
-    - name: FLASK_DEBUG
-        value: "1"
-    ports:
-    - containerPort: 5000
-    ```
-
-1. add the web server volumes to the deployment yaml file
-
-    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server volume that point to the python backend so that changes are picked up on save.
-
-    ```yaml
-    volumes:
-    - name: python-server
-    hostPath:
-        path: /mounted-ks5-src/server
-    - name: frontend
-    hostPath:
-        path: /mounted-ks5-src/app/src
-    ```
-
-    The reference it in the webserver image section
-
-    ```yaml
-    volumeMounts:
-    - mountPath: /server
-    name: python-server
-    ```
-
-1. create deployment and service
-
-    ```bash
-    ➜ kubectl create -f ./config/dev.ks.deployment.yaml
+    ➜ kubectl create -f ./config/test.ks.deployment.yaml
         deployment "ks5web" created
 
-    ➜ kubectl create -f ./config/dev.ks.service.yaml
+    ➜ kubectl create -f ./config/test.ks.service.yaml
         service "ks5web" created
     ➜ kubectl get all
         NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks5web   1         1         1            1           31s
+        deploy/ks5web   1         1         1            1           41s
 
         NAME                   DESIRED   CURRENT   READY     AGE
-        rs/ks5web-2671084145   1         1         1         31s
+        rs/ks5web-2201989947   1         1         1         41s
 
         NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks5web   1         1         1            1           31s
+        deploy/ks5web   1         1         1            1           41s
 
         NAME                         READY     STATUS    RESTARTS   AGE
-        po/ks5web-2671084145-f0f71   2/2       Running   0          31s
-    ```
-
-1. get web server logs
-
-    ```bash
-    ➜ kubectl logs ks5web-2671084145-f0f71 ks5webserver
-        * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-        * Restarting with stat
-        /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
-        warn(RuntimeWarning(msg))
-        * Debugger is active!
-        * Debugger PIN: 207-014-748
+        po/ks5web-2201989947-1b6sr   1/1       Running   0          41s
     ```
 
 1. service ks5web
@@ -132,49 +221,15 @@ To do this we will create a separate deployment and we will enhance our python s
     ➜ minikube service ks5web --url
     ```
 
-1. check backend updates by changing the `hello.py` controller
-
-    If you attach the logs with `-f` and update `./server/controllers/hello.py` you should see
+1. get web server logs
 
     ```bash
-    Detected change in '/server/controllers/hello.py', reloading` in the logs.
-    ```
-
-    Full logs:
-    ```bash
-    ➜ kubectl logs ks5web-2671084145-gtz9q ks5webserver -f
-        * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-        * Restarting with stat
-        /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
-        warn(RuntimeWarning(msg))
-        * Debugger is active!
-        * Debugger PIN: 207-014-748
-        --------------------------------------------------------------------------------
-        INFO in hello [/server/controllers/hello.py:8]:
-        hello controller called
-        --------------------------------------------------------------------------------
-        127.0.0.1 - - [23/Oct/2017 09:53:50] "GET /api/hello HTTP/1.1" 200 -
-        * Detected change in '/server/controllers/hello.py', reloading
-        * Restarting with stat
-        /usr/local/lib/python3.5/runpy.py:125: RuntimeWarning: 'flask.cli' found in sys.modules after import of package 'flask', but prior to execution of 'flask.cli'; this may result in unpredictable behaviour
-        warn(RuntimeWarning(msg))
-        * Debugger is active!
-        * Debugger PIN: 207-014-748
-        --------------------------------------------------------------------------------
-        INFO in hello [/server/controllers/hello.py:8]:
-        hello controller called
-    ```
-
-    If you then refresh the browser you should se the changes in the UI.
-
-1. minikube mounted volume command should detect this changes
-
-    ```bash
-    ➜ minikube mount .:/mounted-ks5-src
-        Mounting . into /mounted-ks5-src on the minikube VM
-        This daemon process needs to stay alive for the mount to still be accessible...
-        ufs starting
-        Rename ./server/controllers/__pycache__/hello.cpython-35.pyc.140423133386000 to hello.cpython-35.pyc
-        rel  results in server/controllers/__pycache__/hello.cpython-35.pyc
-        rename ./server/controllers/__pycache__/hello.cpython-35.pyc.140423133386000 to server/controllers/__pycache__/hello.cpython-35.pyc gets <nil>
+    ➜ kubectl logs ks5web-2201989947-1b6sr
+         * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET / HTTP/1.1" 200 -
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/css/main.5fcf01d3.css HTTP/1.1" 200 -
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/js/main.2fba1481.js HTTP/1.1" 200 -
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/css/main.5fcf01d3.css.map HTTP/1.1" 200 -
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /api/hello HTTP/1.1" 200 -
+        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/js/main.2fba1481.js.map HTTP/1.1" 200 -
     ```
