@@ -279,7 +279,7 @@ This also means we will not use volumes in our **test** environment, only in our
         172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/js/main.2fba1481.js.map HTTP/1.1" 200 -
     ```
 
-1 switch to a development environment.
+1. switch to a development environment.
 
     Clean up the test environment:
 
