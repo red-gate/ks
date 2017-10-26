@@ -1,5 +1,4 @@
 'ks5 config'
-import logging
 
 class Config(object):
     'base class for application configuration details.'
@@ -12,15 +11,13 @@ class Config(object):
 class DevelopmentConfig(Config):
     'dev config'
     DEBUG = True
-    LOGGING_LEVEL = logging.DEBUG
-    SERVE_STATIC_FILES = True
+    SERVE_STATIC_FILES = False
     MODE = 'development'
 
 
 class TestingConfig(Config):
     'test config'
     DEBUG = False
-    LOGGING_LEVEL = logging.INFO
     SERVE_STATIC_FILES = True
     MODE = 'production'
 
