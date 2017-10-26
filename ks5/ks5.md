@@ -225,7 +225,7 @@ This also means we will not use volumes in our **test** environment, only in our
           value: "testing"
     ```
 
-    ![test yaml diff ](./images/test.yaml.diff.png)
+    <img src="https://raw.githubusercontent.com/santiaago/ks/master/ks5/images/test.yaml.diff.png" width="200" />
 
 1. modify `dev.ks.deployment.yaml` file
 
