@@ -26,7 +26,7 @@ config.config[config_name].init_app(app)
 app.add_url_rule('/api/hello', view_func=controller_hello.hello, methods=['GET'])
 
 def serve_static_paths(current_app):
-    'configure static paths if in production mode'
+    'serve static paths if in production mode'
 
     current_app.logger.info('setting prod static paths')
     if not current_app.config['SERVE_STATIC_FILES']:
@@ -39,7 +39,6 @@ def serve_static_paths(current_app):
         'serve static files'
         if path == '':
             return send_from_directory('./app/build/', 'index.html')
-        current_app.logger.warning('looking for :%s', ('./app/build/' + path))
         if exists('./app/build/' + path):
             return send_from_directory('./app/build/', path)
         return send_from_directory('./app/build/', 'index.html')
