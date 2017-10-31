@@ -29,7 +29,7 @@ To deploy, scale and manage containerized applications.
 
 1. clone ks repo
     ```bash
-    git clone https://github.com/santiaago/ks.git
+    git clone https://github.com/red-gate/ks.git
     ```
 
 1. start following the series or go directly to the one you are interested in.

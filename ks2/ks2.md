@@ -7,7 +7,7 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks2
+        ~/dev/github/redgate/ks/ks2
     ```
 
 1. start minikube
@@ -55,7 +55,7 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks2
+        ~/dev/github/redgate/ks/ks2
     ➜ minikube mount .:/mounted-ks2-app-src
         Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...

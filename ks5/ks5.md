@@ -10,7 +10,7 @@ This also means we will not use volumes in our **test** environment, only in our
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks5
+        ~/dev/github/redgate/ks/ks5
     ```
 
 1. start minikube
@@ -225,7 +225,7 @@ This also means we will not use volumes in our **test** environment, only in our
           value: "testing"
     ```
 
-    <img src="https://raw.githubusercontent.com/santiaago/ks/master/ks5/images/test.yaml.diff.png" width="400" />
+    <img src="https://raw.githubusercontent.com/red-gate/ks/master/ks5/images/test.yaml.diff.png" width="400" />
 
 1. modify `dev.ks.deployment.yaml` file
 
@@ -300,7 +300,7 @@ This also means we will not use volumes in our **test** environment, only in our
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks5
+        ~/dev/github/redgate/ks/ks5
     ➜ minikube mount .:/mounted-ks5-src
     ```
 

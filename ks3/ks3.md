@@ -6,7 +6,7 @@ The objective here is to ...
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks3
+        ~/dev/github/redgate/ks/ks3
     ```
 
 1. start minikube
@@ -118,7 +118,7 @@ The objective here is to ...
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks3
+        ~/dev/github/redgate/ks/ks3
     ➜ minikube mount .:/mounted-ks3-app-src
         Mounting ./app/src into /mounted-ks3-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...

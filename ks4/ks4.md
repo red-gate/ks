@@ -20,7 +20,7 @@ We will use this behaviour to get reload exeprience with the app we are building
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks4
+        ~/dev/github/redgate/ks/ks4
     ```
 
 1. start minikube
@@ -59,7 +59,7 @@ We will use this behaviour to get reload exeprience with the app we are building
 
     ```bash
     ➜ pwd
-        ~/dev/github/santiaago/ks/ks4
+        ~/dev/github/redgate/ks/ks4
     ➜ minikube mount .:/mounted-ks4-src
         Mounting ./app/src into /mounted-ks4-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...
