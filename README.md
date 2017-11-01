@@ -1,8 +1,10 @@
 # ks
 
-Kubernetes series
+A Kubernetes series
 
-The objective of this series is to create a web application using kubernetes. We will evolve the application from a development enviroment to a production environment and add different pieces as we go.
+Docker, Kubernetes + the database.
+
+Here we showcase the evolution of a simple web application as we learn Docker and Kubernetes. Our only contraint is to try use Kubernetes through all our environments while we evolve the application from a development enviroment to a production environment and add different pieces as we go.
 
 ## Why Kubernetes
 
