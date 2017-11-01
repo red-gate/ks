@@ -1,4 +1,4 @@
-# Introdution
+# Why Docker and Kubernetes?
 
 Containers and containerized software allows us to build, ship and run distributed applications. It removes the machine contraints from applications. It also let us to create a complex application in a deterministic fashion.
 
