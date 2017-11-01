@@ -1,6 +1,6 @@
 # Kubernetes series part 4
 
-The objective here is to update our app so that we can detect python code changes on the fly.
+The objective here is to update our app so that we can detect server code changes on the fly.
 This will speed up our backend development cycles while still working with kubernetes in a development environment.
 
 The flask development server has a nice reload experience:

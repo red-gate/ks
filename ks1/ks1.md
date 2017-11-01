@@ -1,6 +1,6 @@
 # Kubernetes series part 1
 
-The objective here is to create a minimal react app and hook it up to kubernetes.
+The objective here is to create a minimal react app and hook it up with kubernetes.
 
 ## Build a React app
 

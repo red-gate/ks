@@ -1,6 +1,6 @@
 # Kubernetes series part 3
 
-The objective here is to ...
+The objective here is to incorporate a python flask server and let our frontend make API calls to it.
 
 1. navigate to ks3
 

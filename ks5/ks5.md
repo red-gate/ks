@@ -1,6 +1,6 @@
 # Kubernetes series part 5
 
-The objective here is to create a **test**  environment - that is, build and minimize the frontend code and serve it in our python server as static resources.
+The objective here is to create a **test** environment - that is, build and minimize the frontend code and serve it in our python server as static resources.
 
 To do this we will create a separate deployment `./config/test.ks.deployment.yaml`. We'll enhance our python server to take the environment into account and serve static files as needed.
 
