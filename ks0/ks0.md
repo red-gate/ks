@@ -10,7 +10,7 @@ Containers are not the full story as even with them the amount of work needed fo
 
 This is where [Kubernetes](https://kubernetes.io/) comes to play. It is an orchestration system for docker containers that allows you to manage containers, scaling and deploying different pieces of your application - in a standardized way - with great tooling as part of it. It's a portable abstraction that's compatible with the main cloud providers (Google Cloud, Amazon Web Services and Microsoft Azure all have support for it).
 
-Also, it makes it easier for you and your team to have environemnts from development to production that are similar to each other. Something that previously required lots of time and effort is just provided by using Kubernetes.
+Also, it makes it easier for you and your team to have environments from development to production that are similar to each other. Something that previously required lots of time and effort is just provided by using Kubernetes.
 
 The fact that you could start your application in your machine with the same pieces as in production closes the gaps between a development and a production environment. This makes developpers more aware of how an application is structures together even though they are only responsible for one piece of it. It also makes your application be fully tested earlier in the pipeline.
 
