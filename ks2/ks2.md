@@ -56,8 +56,8 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
     ```bash
     ➜ pwd
         ~/dev/github/redgate/ks/ks2
-    ➜ minikube mount ./app/src:/mounted-ks2-app-src
-        Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
+    ➜ minikube mount .:/mounted-ks2-app-src
+        Mounting . into /mounted-ks2-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...
         ufs starting
     ```
