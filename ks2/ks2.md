@@ -56,7 +56,7 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
     ```bash
     ➜ pwd
         ~/dev/github/redgate/ks/ks2
-    ➜ minikube mount .:/mounted-ks2-app-src
+    ➜ minikube mount ./app/src:/mounted-ks2-app-src
         Mounting ./app/src into /mounted-ks2-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...
         ufs starting
@@ -147,7 +147,7 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
 
 ## Is this mounting the perfect solution
 
-No it is not, it only detects changes inside `./app/src` so adding a library to your app will probably catch the changes.
+No it is not, it only detects changes inside `./app/src` so adding a library (for example, via `yarn add`) to your app and trying to use it will not work.
 
 ## Issues detecting changes
 
