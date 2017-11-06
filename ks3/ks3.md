@@ -119,7 +119,7 @@ The objective here is to incorporate a python flask server and let our frontend 
     ```bash
     ➜ pwd
         ~/dev/github/redgate/ks/ks3
-    ➜ minikube mount .:/mounted-ks3-app-src
+    ➜ minikube mount ./app/src:/mounted-ks3-app-src
         Mounting ./app/src into /mounted-ks3-app-src on the minikube VM
         This daemon process needs to stay alive for the mount to still be accessible...
         ufs starting
