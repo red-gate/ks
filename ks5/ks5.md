@@ -83,7 +83,7 @@ This also means we will not use volumes in our **test** environment, only in our
     config.config[config_name].init_app(app)
     ```
 
-    The config object comest from `./server/config.py` config module. Where we define two environments, a development and a testing environment.
+    The config object comes from `./server/config.py` config module. Where we define two environments, a development and a testing environment.
 
     ```python
     'ks5 config'
@@ -236,7 +236,7 @@ This also means we will not use volumes in our **test** environment, only in our
         value: "dev"
     ```
 
-    Other than that if should stay the same.
+    Other than that it should stay the same.
 
 1. create the test deployment and service
 
