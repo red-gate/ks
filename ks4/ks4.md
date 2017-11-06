@@ -84,7 +84,7 @@ We will use this behaviour to get reload exeprience with the app we are building
 
 1. add the web server volumes to the deployment yaml file
 
-    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server volume that point to the python backend so that changes are picked up on save.
+    Update the global volume section of the `./config/dev.ks.deployment.yaml` with a `python-server` volume that points to the python backend so that changes are picked up on save.
 
     ```yaml
     volumes:
@@ -96,7 +96,7 @@ We will use this behaviour to get reload exeprience with the app we are building
         path: /mounted-ks4-src/app/src
     ```
 
-    The reference it in the webserver image section
+    Then reference it in the webserver image section
 
     ```yaml
     volumeMounts:
@@ -177,7 +177,7 @@ We will use this behaviour to get reload exeprience with the app we are building
         hello controller called
     ```
 
-    If you then refresh the browser you should se the changes in the UI.
+    If you then refresh the browser you should see the changes in the UI.
 
 1. minikube mounted volume command should detect this changes
 
