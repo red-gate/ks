@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.web.name }}-service
+  name: {{ .Release.Name }}-{{ .Values.web.name }}-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: {{ .Values.frontend.containerPort }}
+  selector:
+    run: {{ .Release.Name }}-{{ .Values.web.name }}
+  type: NodePort
+status:
+  loadBalancer: {}

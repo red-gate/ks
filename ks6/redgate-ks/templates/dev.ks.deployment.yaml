@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.web.name }}
+  name: {{ .Release.Name }}-{{ .Values.web.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: {{ .Release.Name }}-{{ .Values.web.name }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: {{ .Release.Name }}-{{ .Values.web.name }}
+    spec:
+      containers:
+      - image: {{ .Values.frontend.image.repo }}:{{ .Values.frontend.image.tag }}
+        name: {{ .Values.frontend.name }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.frontend.containerPort }}
+        resources: {}
+        volumeMounts:
+          - mountPath: /app/src
+            name: frontend
+      - image: {{ .Values.webserver.image.repo }}:{{ .Values.webserver.image.tag }}
+        name: {{ .Values.webserver.name }}
+        imagePullPolicy: IfNotPresent
+        command: ["python"]
+        args: ["-m", "flask", "run"]
+        env:
+        - name: FLASK_DEBUG
+          value: "1"
+        - name: FLASK_CONFIG
+          value: "dev"
+        ports:
+        - containerPort: {{ .Values.webserver.containerPort }}
+        resources: {}
+        volumeMounts:
+          - mountPath: /server
+            name: python-server
+      volumes:
+      - name: python-server
+        hostPath:
+          path: {{ .Values.mountDir }}/server
+      - name: frontend
+        hostPath:
+          path: {{ .Values.mountDir }}/app/src
+status: {}
