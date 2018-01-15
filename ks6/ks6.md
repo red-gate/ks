@@ -55,8 +55,8 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
 
-    ➜ helm create redgate-ks
-    Creating redgate-ks
+    ➜ helm create ks
+    Creating ks
     ```
 
 1. Inspect the chart directory
@@ -65,8 +65,8 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
      
-    ➜ tree redgate-ks
-    redgate-ks
+    ➜ tree ks
+    ks
     ├── Chart.yaml
     ├── charts
     ├── templates
@@ -88,13 +88,13 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
      
-    ➜ rm redgate-ks/templates/*.yaml
+    ➜ rm ks/templates/*.yaml
     
     # Delete the contents of NOTES.txt 
-    ➜ > redgate-ks/templates/NOTES.txt
+    ➜ > ks/templates/NOTES.txt
     
-    ➜ tree redgate-ks
-    redgate-ks
+    ➜ tree ks
+    ks
     ├── Chart.yaml
     ├── charts
     ├── templates
@@ -111,10 +111,10 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
      
-    ➜ cp ../ks6/config/dev.* ./redgate-ks/templates/
+    ➜ cp ../ks6/config/dev.* ./ks/templates/
     
-    ➜ tree redgate-ks
-    redgate-ks/
+    ➜ tree ks
+    ks/
     ├── Chart.yaml
     ├── charts
     ├── templates
@@ -245,9 +245,9 @@ In another terminal:
 ➜ eval $(minikube docker-env)
 ➜ docker build -f ./server/Dockerfile -t ks6webserverimage .
 ➜ docker build -f ./web/Dockerfile -t ks6webimage .
-➜ helm install ./redgate-ks/ -n redgate-ks
+➜ helm install ./ks/ -n ks
 
-NAME:   redgate-ks
+NAME:   ks
 LAST DEPLOYED: Thu Jan 11 16:03:29 2018
 NAMESPACE: default
 STATUS: DEPLOYED
