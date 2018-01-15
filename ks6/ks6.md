@@ -38,6 +38,8 @@ Once you have Helm installed, the next thing is to initialize the command line a
 ➜ helm init
 ```
 
+To know more about `helm init` see the [documentation](https://github.com/kubernetes/helm/blob/master/docs/helm/helm_init.md).
+
 ### Creating the chart
 
 1. Create the ks6 directory
