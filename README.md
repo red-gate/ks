@@ -44,5 +44,6 @@ To deploy, scale and manage containerized applications.
 1. [ks3: add a python web server that hosts an API](./ks3/ks3.md)
 1. [ks4: make minikube detect Python code changes](./ks4/ks4.md)
 1. [ks5: use helm to deploy the application](./ks5/ks5.md)
+1. [ks6: create a test environment using helm](./ks6/ks6.md)
 1. ...
 1. create a prod environment
