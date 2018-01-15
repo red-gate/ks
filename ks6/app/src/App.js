@@ -25,7 +25,7 @@ class App extends Component {
   render() {
     return <div className="App">
         <header className="App-header">
-          <h1 className="App-title">ks7 app</h1>
+          <h1 className="App-title">ks6 app</h1>
         </header>
         <p className="App-intro">
           ks6 app here...
