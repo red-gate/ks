@@ -39,7 +39,7 @@ Once you have Helm installed, the next thing is to initialize the command line a
      ~/dev/github/redgate/ks/
     ➜ mkdir ks6
     ➜ cp -r ./ks5/ ./ks6/
-    ➜ cd 6
+    ➜ cd ks6
     ```
     
 
