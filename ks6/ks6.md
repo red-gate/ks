@@ -182,11 +182,11 @@ Whenever you want to refer to a variable in the `values.yaml` file, you must sta
 
 #### `dev.ks.deployment.yaml`
 
-<img src="https://raw.githubusercontent.com/red-gate/ks/master/ks6/images/helm-ks-deployment-diff.png" width="400" />
+![dev.ks.deployment.yaml diff](images/helm-ks-deployment-diff.png)
 
 #### `dev.ks.service.yaml`
 
-<img src="https://raw.githubusercontent.com/red-gate/ks/master/ks6/images/helm-ks-service-diff.png" width="400" />
+![dev.ks.service.yaml diff](images/helm-ks-service-diff.png)
 
 ## Deploying the chart
 
