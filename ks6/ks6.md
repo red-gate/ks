@@ -1,6 +1,6 @@
 # Kubernetes series part 6
 
-The objective here is to create a Helm "chart" for our Kubernetes application. This will allow us to treat all of our Kubernetes resources as a single package and avoid using `kubectl` to manually deploy individual resources step by step. 
+The objective here is to create a Helm "chart" for our Kubernetes application. This will allow us to treat all of our Kubernetes resources as a single package and avoid using `kubectl` to manually deploy individual resources step by step.
 
 Helm also makes it easier to create different environments (dev/test/prod) which we will see the benefit of in later tutorials.
 
@@ -49,7 +49,6 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ➜ cp -r ./ks5/ ./ks6/
     ➜ cd ks6
     ```
-    
 
 1. Create our new chart
 
@@ -66,7 +65,7 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ```bash
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
-     
+
     ➜ tree ks
     ks
     ├── Chart.yaml
@@ -89,12 +88,12 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ```bash
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
-     
+
     ➜ rm ks/templates/*.yaml
-    
-    # Delete the contents of NOTES.txt 
+
+    # Delete the contents of NOTES.txt
     ➜ > ks/templates/NOTES.txt
-    
+
     ➜ tree ks
     ks
     ├── Chart.yaml
@@ -112,9 +111,9 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ```bash
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
-     
+
     ➜ cp ../ks6/config/dev.* ./ks/templates/
-    
+
     ➜ tree ks
     ks/
     ├── Chart.yaml
@@ -134,7 +133,7 @@ Once you have Helm installed, the next thing is to initialize the command line a
     ```bash
     ➜ pwd
      ~/dev/github/redgate/ks/ks6/
-     
+
     ➜ rm -rf ./config
     ➜ rm -rf ./scripts
     ```
@@ -167,7 +166,7 @@ webserver:
     containerPort: 5000
 ```
 
-We'll now modify our Kubernetes resource files to refer to these values. 
+We'll now modify our Kubernetes resource files to refer to these values.
 
 ### Helm template syntax
 
@@ -192,8 +191,8 @@ Whenever you want to refer to a variable in the `values.yaml` file, you must sta
 
 At this point, you're ready to deploy the Kubernetes chart.
 
-
 In one terminal, leave this running:
+
 ```bash
 ➜ pwd
     ~/dev/github/redgate/ks/ks6/
@@ -201,6 +200,7 @@ In one terminal, leave this running:
 ```
 
 In another terminal:
+
 ```bash
 ➜ pwd
     ~/dev/github/redgate/ks/ks6/
@@ -234,7 +234,7 @@ ks6web-76588bdd75-r6226  0/2    ContainerCreating  0         0s
 
 Your app is now up and running.
 
-## What's next?
+## What's next
 
 One thing you'll notice is we've only moved our development environment into helm. A next step would be to leverage the `values.yaml` file by offering a configurable "environment" variable. By testing the value of "environment" you can enable or disable parts of the Kubernetes resource configuration file, appropriate to the environment you're deploying to.
 
