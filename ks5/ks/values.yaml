@@ -1,0 +1,18 @@
+web:
+  name: ks5web
+
+mountDir: /mounted-ks5-src
+
+frontend:
+  name: ks5webfrontend
+  image:
+    repo: ks5webimage
+    tag: latest
+  containerPort: 3000
+
+webserver:
+  name: ks5webserver
+  image:
+    repo: ks5webserverimage
+    tag: latest
+  containerPort: 5000

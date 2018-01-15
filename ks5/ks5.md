@@ -1,318 +1,309 @@
 # Kubernetes series part 5
 
-The objective here is to create a **test** environment - that is, build and minimize the frontend code and serve it in our python server as static resources.
+The objective here is to create a Helm "chart" for our Kubernetes application. This will allow us to treat all of our Kubernetes resources as a single package and avoid using `kubectl` to manually deploy individual resources step by step.
 
-To do this we will create a separate deployment `./config/test.ks.deployment.yaml`. We'll enhance our python server to take the environment into account and serve static files as needed.
+Helm also makes it easier to create different environments (dev/test/prod) which we will see the benefit of in later tutorials.
 
-This also means we will not use volumes in our **test** environment, only in our **dev** environment.
+**NOTE: This walk-through is significantly different to previous walk-throughs in the series, as we describe the _process_ of getting to the result you see in the repo. This involves copying previous resources and modifying them to work progressively towards a working solution.**
 
-1. navigate to ks5
+## Motivation
+
+In all the previous walkthroughs, we deployed our Kubernetes app using the `kubectl` command line application. This was painful because we had to remember to create the deployment and the service each time we wanted to release a new version of our app. If we created any more Kubernetes resources, then we'd have to remember to manually deploy those each time too.
+
+On top of that, we also had to remember the exact file names of our Kubernetes manifest files. If we've built some automation around this, then we'd need to update our scripts each time we made any changes to filenames.
+
+The problem is that _**we**_ have to remember exactly how to deploy the application step by step. Our "application" (i.e, _all_ of our Kubernetes resources packaged together) is something `kubectl` has no idea about.
+
+## Helm
+
+[Helm](https://github.com/kubernetes/helm) is one of the solutions to this problem. According to the documentation:
+
+> [Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources.](https://github.com/kubernetes/helm#kubernetes-helm)
+
+> [A chart is organized as a collection of files inside of a directory.](https://github.com/kubernetes/helm/blob/master/docs/charts.md#the-chart-file-structure)
+
+In other words, Helm allows us to work from the mental model of managing our "application" on our cluster, instead of individual Kubernetes resources via `kubectl`.
+
+One of the other features of Helm is its ability to use _templates_ in Kubernetes resources that are part of the chart. This means you can define values in one place and share them across multiple Kubernetes resource files. We'll also make use of this functonality as part of this walk-through.
+
+## Charting a course to Helm
+
+In this walk-through, we'll turn our Kubernetes application into a helm "chart". This will let us deploy and update our entire application (all of the Kubernetes resources) using a single command line call to helm. We also won't even touch `kubectl` during deployment.
+
+### Getting Helm up and running
+
+Make sure you've got helm installed already. Follow the [Installing Helm](https://docs.helm.sh/using_helm/#installing-helm) documentation to do this.
+
+Once you have Helm installed, the next thing is to initialize the command line and get it running in your cluster.
+
+```bash
+➜ helm init
+```
+
+To know more about `helm init` see the [documentation](https://github.com/kubernetes/helm/blob/master/docs/helm/helm_init.md).
+
+### Creating the chart
+
+1. Create the ks5 directory
 
     ```bash
     ➜ pwd
-        ~/dev/github/redgate/ks/ks5
+     ~/dev/github/redgate/ks/
+    ➜ mkdir ks5
+    ➜ cp -r ./ks5/ ./ks5/
+    ➜ cd ks5
     ```
 
-1. start minikube
+1. Create our new chart
 
     ```bash
-    ➜ minikube start
+    ➜ pwd
+     ~/dev/github/redgate/ks/ks5/
+
+    ➜ helm create ks
+    Creating ks
     ```
 
-1. switch to minikube context
+1. Inspect the chart directory
 
     ```bash
-    ➜ eval $(minikube docker-env)
+    ➜ pwd
+     ~/dev/github/redgate/ks/ks5/
+
+    ➜ tree ks
+    ks
+    ├── Chart.yaml
+    ├── charts
+    ├── templates
+    │   ├── NOTES.txt
+    │   ├── _helpers.tpl
+    │   ├── deployment.yaml
+    │   ├── ingress.yaml
+    │   └── service.yaml
+    └── values.yaml
+
+    2 directories, 7 files
     ```
 
-    If you ever need to switch back to your machine's context do:
+    Note that helm has created some default Kubernetes resources for us. We want to use our existing resources, so we won't be using the yaml files that have been created for us.
+
+1. Delete the default files
 
     ```bash
-    ➜ eval $(docker-machine env -u)
+    ➜ pwd
+     ~/dev/github/redgate/ks/ks5/
+
+    ➜ rm ks/templates/*.yaml
+
+    # Delete NOTES.txt file
+    # The contents of this are shown when you 'install' the chart.
+    # But we won't use it in this walk-through
+    ➜ rm ks/templates/NOTES.txt
+
+    ➜ tree ks
+    ks
+    ├── Chart.yaml
+    ├── charts
+    ├── templates
+    │   └── _helpers.tpl
+    └── values.yaml
+
+    2 directories, 4 files
     ```
 
-1. build frontend app
+1. Copy our old **development** resources into the helm chart templates directory
 
     ```bash
-    ➜ cd app
-    ➜ yarn
-    ➜ yarn build
-        yarn run v1.1.0
-        $ react-scripts build
-        Creating an optimized production build...
-        Compiled successfully.
+    ➜ pwd
+     ~/dev/github/redgate/ks/ks5/
 
-        File sizes after gzip:
+    ➜ cp ../ks5/config/dev.* ./ks/templates/
 
-        39.7 KB  build/static/js/main.2fba1481.js
-        175 B    build/static/css/main.5fcf01d3.css
+    ➜ tree ks
+    ks/
+    ├── Chart.yaml
+    ├── charts
+    ├── templates
+    │   ├── _helpers.tpl
+    │   ├── dev.ks.deployment.yaml
+    │   └── dev.ks.service.yaml
+    └── values.yaml
 
-        ...
-        The build folder is ready to be deployed.
-        You may serve it with a static server:
-        ...
-        ✨  Done in 6.36s.
+    2 directories, 6 files
     ```
 
-1. we update the webserver dockerfile to add our built app.
-
-    To add the `app/build` folder when building the image.
-
-    ```dockerfile
-    WORKDIR ..
-
-    ADD ./server ./server
-    ADD ./app/build ./server/app/build
-
-    WORKDIR /server
-    ```
-
-1. update the web server to load a configuration based on the environment
-
-    We need to start using a configuration for our server in order to switch from development mode to production mode.
-
-    ```python
-    config_name = getenv('FLASK_CONFIG', 'default')
-
-    if not config_name in config.config:
-        raise ValueError('Invalid FLASK_CONFIG "{}", choose one of {}'.format(
-            config_name,
-            str.join(', ', config.config.keys())))
-
-    app.config.from_object(config.config[config_name])
-    config.config[config_name].init_app(app)
-    ```
-
-    The config object comes from `./server/config.py` config module. Where we define two environments, a development and a testing environment.
-
-    ```python
-    'ks5 config'
-
-    class Config(object):
-        'base class for application configuration details.'
-        SECRET_KEY = 'ks5'
-
-        @staticmethod
-        def init_app(app):
-            'init app'
-            pass
-    class DevelopmentConfig(Config):
-        'dev config'
-        DEBUG = True
-        SERVE_STATIC_FILES = False
-        MODE = 'development'
-
-    class TestingConfig(Config):
-        'test config'
-        DEBUG = False
-        SERVE_STATIC_FILES = True
-        MODE = 'production'
-
-    config = {
-        'dev': DevelopmentConfig,
-        'testing': TestingConfig,
-        'default': TestingConfig
-    }
-    ```
-
-1. update the web server to serve our built app as static files.
-
-    To do this we create the Flask app with the `static_folder` argument
-
-    ```python
-    app = Flask(__name__, static_folder='./app/build/static/')
-    ```
-
-    > static_folder – the folder with static files that should be served at static_url_path. Defaults to the 'static' folder in the root path of the application.
-
-    Finally, we also need to serve static files in the server:
-
-    ```python
-    def serve_static_paths(current_app):
-        'serve static files if in production mode'
-
-        current_app.logger.info('setting prod static paths')
-        if not current_app.config['SERVE_STATIC_FILES']:
-            current_app.logger.info('skipping serving static files based on config')
-            return
-        current_app.logger.info('serving up static files')
-        @current_app.route('/', defaults={'path': ''})
-        @current_app.route('/<path:path>')
-        def serve(path):
-            'serve static files'
-            if path == '':
-                return send_from_directory('./app/build/', 'index.html')
-            if exists('./app/build/' + path):
-                return send_from_directory('./app/build/', path)
-            return send_from_directory('./app/build/', 'index.html')
-    ```
-
-    All together our server looks like this:
-
-    ```python
-    'ks5 web server'
-
-    import logging
-    from os import getenv
-    from os.path import exists
-
-    import config
-
-    from flask import Flask
-    from flask import send_from_directory
-
-    import controllers.hello as controller_hello
-
-    app = Flask(__name__, static_folder='./app/build/static/')
-    app.logger.setLevel(logging.DEBUG)
-    config_name = getenv('FLASK_CONFIG', 'default')
-
-    if not config_name in config.config:
-        raise ValueError('Invalid FLASK_CONFIG "{}", choose one of {}'.format(
-            config_name,
-            str.join(', ', config.config.keys())))
-
-    app.config.from_object(config.config[config_name])
-    config.config[config_name].init_app(app)
-
-    app.add_url_rule('/api/hello', view_func=controller_hello.hello, methods=['GET'])
-
-    def serve_static_paths(current_app):
-        'serve static paths if in production mode'
-
-        current_app.logger.info('setting prod static paths')
-        if not current_app.config['SERVE_STATIC_FILES']:
-            current_app.logger.info('skipping serving static files based on config')
-            return
-        current_app.logger.info('serving up static files')
-        @current_app.route('/', defaults={'path': ''})
-        @current_app.route('/<path:path>')
-        def serve(path):
-            'serve static files'
-            if path == '':
-                return send_from_directory('./app/build/', 'index.html')
-            if exists('./app/build/' + path):
-                return send_from_directory('./app/build/', path)
-            return send_from_directory('./app/build/', 'index.html')
-
-        current_app.logger.info('all ready, static paths set')
-
-    serve_static_paths(app)
-
-    if __name__ == '__main__':
-        app.run(host='0.0.0.0', port=5000)
-    ```
-
-1. build web server docker image
+1. Tidy up unneeded resources
 
     ```bash
-    ➜ docker build -f ./server/Dockerfile -t ks5webserverimage .
+    ➜ pwd
+     ~/dev/github/redgate/ks/ks5/
+
+    ➜ rm -rf ./config
+    ➜ rm -rf ./scripts
     ```
 
-1. we add a `test.ks.deployment.yaml` file for our test environment
+    At this point, we could deploy our helm chart. However, we'll first make use of Helm's _template_ feature.
 
-    This deployment file only needs to reference the `webserver` as we no longer need a frontend image if we serve the react app from static files.
+### Using templates in the chart
 
-    We can remove the following sections from the deployment yaml file:
-    - the ks5web image section
-    - the volumes sections
-    - the python commands as we are not running in development
+Helm creates some values in `values.yaml` that were used in the default resources we just deleted.
+We don't want to use any of these values, so we'll define our own. Replace the contents of `values.yaml` with:
 
-    We can add a `FLASK_CONFIG` environment variable in the deployment yaml file:
+```yaml
+web:
+    name: ks5web
 
-    ```yaml
-    - name: FLASK_CONFIG
-          value: "testing"
-    ```
+mountDir: /mounted-ks5-src
 
-    <img src="https://raw.githubusercontent.com/red-gate/ks/master/ks5/images/test.yaml.diff.png" width="400" />
+frontend:
+    name: ks5webfrontend
+    image:
+        repo: ks5webimage
+        tag: latest
+    containerPort: 3000
 
-1. modify `dev.ks.deployment.yaml` file
+webserver:
+    name: ks5webserver
+    image:
+        repo: ks5webserverimage
+        tag: latest
+    containerPort: 5000
+```
 
-    The development deployment config now needs the `FLASK_CONFIG` environment variable in order to load the development config.
+We'll now modify our Kubernetes resource files to refer to these values.
 
-    ```yaml
-      - name: FLASK_CONFIG
-        value: "dev"
-    ```
+### Helm template syntax
 
-    Other than that it should stay the same.
+First, a quick explanation of the syntax:
 
-1. create the test deployment and service
+`.Release.Name` refers to the name of the _helm release_. This is a string you define when you first deploy your helm chart and stays the same through upgrades.
+
+`.Values.web.name` is a reference to the `name` value under the `web` data structure at the root of our `values.yaml` file.
+Whenever you want to refer to a variable in the `values.yaml` file, you must start with `.Values`. You can then pull values out of the data structures you have defined using the dot syntax.
+
+### Updating the resources from `values.yaml`
+
+#### `dev.ks.deployment.yaml`
+
+![dev.ks.deployment.yaml diff](images/helm-ks-deployment-diff.png)
+
+#### `dev.ks.service.yaml`
+
+![dev.ks.service.yaml diff](images/helm-ks-service-diff.png)
+
+## Deploying the chart
+
+At this point, you're ready to deploy the Kubernetes chart.
+
+In one terminal, leave this running:
+
+```bash
+➜ pwd
+    ~/dev/github/redgate/ks/ks5/
+➜ minikube mount .:/mounted-ks5-src
+```
+
+In another terminal:
+
+```bash
+➜ pwd
+    ~/dev/github/redgate/ks/ks5/
+➜ cd app
+➜ yarn
+➜ yarn build
+➜ cd ..
+➜ eval $(minikube docker-env)
+➜ docker build -f ./server/Dockerfile -t ks5webserverimage .
+➜ docker build -f ./web/Dockerfile -t ks5webimage .
+➜ helm install ./ks/ -n ks
+
+NAME:   ks
+LAST DEPLOYED: Thu Jan 11 16:03:29 2018
+NAMESPACE: default
+STATUS: DEPLOYED
+
+RESOURCES:
+==> v1/Service
+NAME            TYPE          CLUSTER-IP  EXTERNAL-IP  PORT(S)       AGE
+ks5web-service  LoadBalancer  10.0.0.173  <pending>    80:31316/TCP  0s
+
+==> v1beta1/Deployment
+NAME    DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+ks5web  1        1        1           0          0s
+
+==> v1/Pod(related)
+NAME                     READY  STATUS             RESTARTS  AGE
+ks5web-76588bdd75-r6226  0/2    ContainerCreating  0         0s
+```
+
+Your app is now up and running.
+
+## Check everything is up and running
+
+1. get pods
 
     ```bash
-    ➜ kubectl create -f ./config/test.ks.deployment.yaml
-        deployment "ks5web" created
-
-    ➜ kubectl create -f ./config/test.ks.service.yaml
-        service "ks5web" created
-    ➜ kubectl get all
-        NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks5web   1         1         1            1           41s
-
-        NAME                   DESIRED   CURRENT   READY     AGE
-        rs/ks5web-2201989947   1         1         1         41s
-
-        NAME            DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-        deploy/ks5web   1         1         1            1           41s
-
-        NAME                         READY     STATUS    RESTARTS   AGE
-        po/ks5web-2201989947-1b6sr   1/1       Running   0          41s
+    ➜ kubectl get pods
+    NAME                           READY     STATUS    RESTARTS   AGE
+    ks-ks5web-5dfd95cc95-9dnn5     2/2       Running   0          7m
     ```
 
-1. service ks5web
+1. service ks5 app
 
     ```bash
-    ➜ minikube service ks5web --url
+    ➜ minikube service ks-ks5web-service --url
     ```
+
+    Notice the name is now `ks-ks5web-service` previously we were using `ks5web`. This is because we build the service name using helm. More specifically
+
+    `name: {{ .Release.Name }}-{{ .Values.web.name }}-service` in the `dev.ks.service.yaml` file.
 
 1. get web server logs
 
     ```bash
-    ➜ kubectl logs ks5web-2201989947-1b6sr
-         * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET / HTTP/1.1" 200 -
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/css/main.5fcf01d3.css HTTP/1.1" 200 -
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/js/main.2fba1481.js HTTP/1.1" 200 -
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/css/main.5fcf01d3.css.map HTTP/1.1" 200 -
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /api/hello HTTP/1.1" 200 -
-        172.17.0.1 - - [25/Oct/2017 16:56:01] "GET /static/js/main.2fba1481.js.map HTTP/1.1" 200 -
+    ➜ kubectl logs ks-ks5web-5dfd95cc95-9dnn5 ks5webserver
+    ➜ kubectl logs ks-ks5web-5dfd95cc95-9dnn5 ks5webfrontend
     ```
 
-1. switch to a development environment.
+## Delete helm release
 
-    Clean up the test environment:
+If you want to delete the application from your cluster, you can do this by using the `helm delete` command:
 
-    ```bash
-    ➜ kubectl delete ./config/test.ks.deployment.yaml
-    ➜ kubectl delete ./config/test.ks.service.yaml
-    ➜ docker rmi ks5webserverimage
-    ```
+```bash
+➜ helm delete ks
+release "ks" deleted
+```
 
-    Create images:
+Note that this doesn't _completely_ delete the release. You can still see it if you run `helm list --all`
 
-    ```bash
-    ➜ docker build -f ./web/Dockerfile -t ks5webimage
-    ➜ docker build -f ./server/Dockerfile -t ks5webserverimage
-    ```
+```bash
+➜ helm list --all
+NAME                    REVISION        UPDATED                         STATUS  CHART                   NAMESPACE
+ks                      1               Mon Jan 15 12:56:08 2018        DELETED ks-0.1.0                default
+```
 
-    Run volume
+You can rollback the delete by using the `helm rollback` command with the listed revision number:
 
-    ```bash
-    ➜ pwd
-        ~/dev/github/redgate/ks/ks5
-    ➜ minikube mount .:/mounted-ks5-src
-    ```
+```bash
+➜ helm rollback ks 1
+Rollback was a success! Happy Helming!
+```
 
-    Create dev deployment and service
+This will bring the application back up in your cluster, which you can verify with `kubectl get all`.
 
-    ```bash
-    ➜ kubectl create ./config/dev.ks.deployment.yaml
-    ➜ kubectl create ./config/dev.ks.service.yaml
-    ```
+If you _really_ want to permanently delete your release, you must use `--purge` when running `helm delete`:
 
-    Navigate to ks5web url
+```bash
+➜ helm delete --purge ks
+release "ks" deleted
+```
 
-    ```bash
-    ➜ minikube service ks5web --url
-    ```
+You won't be able to bring this release back, so you'll need to run another `helm install`.
+
+## What's next
+
+One thing you'll notice is we've only moved our development environment into helm. A next step would be to leverage the `values.yaml` file by offering a configurable "environment" variable. By testing the value of "environment" you can enable or disable parts of the Kubernetes resource configuration file, appropriate to the environment you're deploying to.
+
+In future walk-throughs, we'll be exploring this idea.
+
+We also haven't covered upgrading a release yet. This is possible with `helm` and we'll come to this in another tutorial.
