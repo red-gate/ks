@@ -1,5 +1,11 @@
 # Kubernetes series part 6
 
+The objective here is to create a Helm "chart" for our Kubernetes application. This will allow us to treat all of our Kubernetes resources as a single package and avoid using `kubectl` to manually deploy individual resources step by step. 
+
+Helm also makes it easier to create different environments (dev/test/prod) which we will see the benefit of in later tutorials.
+
+## Motivation
+
 In all the previous walkthroughs, we deployed our Kubernetes app using the `kubectl` command line application. This was painful because we had to remember to create the deployment and the service each time we wanted to release a new version of our app. If we created any more Kubernetes resources, then we'd have to remember to manually deploy those each time too.
 
 On top of that, we also had to remember the exact file names of our Kubernetes manifest files. If we've built some automation around this, then we'd need to update our scripts each time we made any changes to filenames.
