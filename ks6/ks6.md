@@ -187,8 +187,8 @@ kind: Deployment
 metadata:
     creationTimestamp: null
     labels:
-        run: ks5web # THIS LINE
-    name: ks5web
+        run: ks6web # THIS LINE
+    name: ks6web
 spec:
 [...]
 ```

@@ -28,7 +28,7 @@ class App extends Component {
           <h1 className="App-title">ks7 app</h1>
         </header>
         <p className="App-intro">
-          ks7 app here...
+          ks6 app here...
           hello {this.state.message}
         </p>
       </div>

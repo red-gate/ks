@@ -1,8 +1,8 @@
-'ks5 config'
+'ks6 config'
 
 class Config(object):
     'base class for application configuration details.'
-    SECRET_KEY = 'ks5'
+    SECRET_KEY = 'ks6'
 
     @staticmethod
     def init_app(app):
