@@ -263,12 +263,45 @@ Your app is now up and running.
     ➜ kubectl logs ks-ks6web-5dfd95cc95-9dnn5 ks6webfrontend
     ```
 
-## Stop cluster
+## Delete helm release
 
-## Delete cluster
+If you want to delete the application from your cluster, you can do this by using the `helm delete` command:
+
+```bash
+➜ helm delete ks
+release "ks" deleted
+```
+
+Note that this doesn't _completely_ delete the release. You can still see it if you run `helm list --all`
+
+```bash
+➜ helm list --all
+NAME                    REVISION        UPDATED                         STATUS  CHART                   NAMESPACE
+ks                      1               Mon Jan 15 12:56:08 2018        DELETED ks-0.1.0                default
+```
+
+You can rollback the delete by using the `helm rollback` command with the listed revision number:
+
+```bash
+➜ helm rollback ks 1
+Rollback was a success! Happy Helming!
+```
+
+This will bring the application back up in your cluster, which you can verify with `kubectl get all`.
+
+If you _really_ want to permanently delete your release, you must use `--purge` when running `helm delete`:
+
+```bash
+➜ helm delete --purge ks
+release "ks" deleted
+```
+
+You won't be able to bring this release back, so you'll need to run another `helm install`.
 
 ## What's next
 
 One thing you'll notice is we've only moved our development environment into helm. A next step would be to leverage the `values.yaml` file by offering a configurable "environment" variable. By testing the value of "environment" you can enable or disable parts of the Kubernetes resource configuration file, appropriate to the environment you're deploying to.
 
 In future walk-throughs, we'll be exploring this idea.
+
+We also haven't covered upgrading a release yet. This is possible with `helm` and we'll come to this in another tutorial.
