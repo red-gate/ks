@@ -119,14 +119,18 @@ To know more about `helm init` see the [documentation](https://github.com/kubern
 
     ➜ cp ../ks5/config/dev.* ./ks/templates/
 
+    # Rename to remove the 'dev' prefix
+    ➜ mv ./ks/dev.ks.deployment.yaml ./ks/ks.deployment.yaml
+    ➜ mv ./ks/dev.ks.service.yaml ./ks/ks.service.yaml
+
     ➜ tree ks
     ks/
     ├── Chart.yaml
     ├── charts
     ├── templates
     │   ├── _helpers.tpl
-    │   ├── dev.ks.deployment.yaml
-    │   └── dev.ks.service.yaml
+    │   ├── ks.deployment.yaml
+    │   └── ks.service.yaml
     └── values.yaml
 
     2 directories, 6 files
@@ -183,13 +187,13 @@ Whenever you want to refer to a variable in the `values.yaml` file, you must sta
 
 ### Updating the resources from `values.yaml`
 
-#### `dev.ks.deployment.yaml`
+#### `ks.deployment.yaml`
 
-![dev.ks.deployment.yaml diff](images/helm-ks-deployment-diff.png)
+![ks.deployment.yaml diff](images/helm-ks-deployment-diff.png)
 
-#### `dev.ks.service.yaml`
+#### `ks.service.yaml`
 
-![dev.ks.service.yaml diff](images/helm-ks-service-diff.png)
+![ks.service.yaml diff](images/helm-ks-service-diff.png)
 
 ## Deploying the chart
 
@@ -256,7 +260,7 @@ Your app is now up and running.
 
     Notice the name is now `ks-ks5web-service` previously we were using `ks5web`. This is because we build the service name using helm. More specifically
 
-    `name: {{ .Release.Name }}-{{ .Values.web.name }}-service` in the `dev.ks.service.yaml` file.
+    `name: {{ .Release.Name }}-{{ .Values.web.name }}-service` in the `ks.service.yaml` file.
 
 1. get web server logs
 
