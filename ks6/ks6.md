@@ -95,15 +95,16 @@ To know more about `helm init` see the [documentation](https://github.com/kubern
 
     ➜ rm ks/templates/*.yaml
 
-    # Delete the contents of NOTES.txt
-    ➜ > ks/templates/NOTES.txt
+    # Delete NOTES.txt file
+    # The contents of this are shown when you 'install' the chart.
+    # But we won't use it in this walk-through
+    ➜ rm ks/templates/NOTES.txt
 
     ➜ tree ks
     ks
     ├── Chart.yaml
     ├── charts
     ├── templates
-    │   ├── NOTES.txt
     │   └── _helpers.tpl
     └── values.yaml
 
@@ -123,7 +124,6 @@ To know more about `helm init` see the [documentation](https://github.com/kubern
     ├── Chart.yaml
     ├── charts
     ├── templates
-    │   ├── NOTES.txt
     │   ├── _helpers.tpl
     │   ├── dev.ks.deployment.yaml
     │   └── dev.ks.service.yaml
