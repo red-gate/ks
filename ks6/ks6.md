@@ -84,6 +84,9 @@ Once you have Helm installed, the next thing is to initialize the command line a
      
     ➜ rm redgate-ks/templates/*.yaml
     
+    # Delete the contents of NOTES.txt 
+    ➜ > redgate-ks/templates/NOTES.txt
+    
     ➜ tree redgate-ks
     redgate-ks
     ├── Chart.yaml
@@ -154,14 +157,6 @@ webserver:
         repo: ks6webserverimage
         tag: latest
     containerPort: 5000
-```
-
-We now also need to delete the contents of `NOTES.txt` as it refers to the values we just deleted:
-
-```bash
-➜ pwd
-    ~/dev/github/redgate/ks/ks6/
-➜ > redgate-ks/templates/NOTES.txt
 ```
 
 We'll now modify our Kubernetes resource files to refer to these values. 
