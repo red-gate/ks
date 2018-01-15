@@ -50,7 +50,7 @@ To know more about `helm init` see the [documentation](https://github.com/kubern
     ➜ pwd
      ~/dev/github/redgate/ks/
     ➜ mkdir ks5
-    ➜ cp -r ./ks5/ ./ks5/
+    ➜ cp -r ./ks4/ ./ks5/
     ➜ cd ks5
     ```
 
