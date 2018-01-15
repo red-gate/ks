@@ -1,9 +1,8 @@
 FROM python:3.5
 
-WORKDIR ..
+WORKDIR .
 
 ADD ./server ./server
-ADD ./app/build ./server/app/build 
 
 WORKDIR /server
 
