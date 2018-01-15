@@ -236,6 +236,37 @@ ks6web-76588bdd75-r6226  0/2    ContainerCreating  0         0s
 
 Your app is now up and running.
 
+## Check everything is up and running
+
+1. get pods
+
+    ```bash
+    ➜ kubectl get pods
+    NAME                           READY     STATUS    RESTARTS   AGE
+    ks-ks6web-5dfd95cc95-9dnn5     2/2       Running   0          7m
+    ```
+
+1. service ks6 app
+
+    ```bash
+    ➜ minikube service ks-ks6web-service --url
+    ```
+
+    Notice the name is now `ks-ks6web-service` previously we were using `ks5web`. This is because we build the service name using helm. More specifically
+
+    `name: {{ .Release.Name }}-{{ .Values.web.name }}-service` in the `dev.ks.service.yaml` file.
+
+1. get web server logs
+
+    ```bash
+    ➜ kubectl logs ks-ks6web-5dfd95cc95-9dnn5 ks6webserver
+    ➜ kubectl logs ks-ks6web-5dfd95cc95-9dnn5 ks6webfrontend
+    ```
+
+## Stop cluster
+
+## Delete cluster
+
 ## What's next
 
 One thing you'll notice is we've only moved our development environment into helm. A next step would be to leverage the `values.yaml` file by offering a configurable "environment" variable. By testing the value of "environment" you can enable or disable parts of the Kubernetes resource configuration file, appropriate to the environment you're deploying to.
