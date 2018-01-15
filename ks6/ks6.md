@@ -4,6 +4,8 @@ The objective here is to create a Helm "chart" for our Kubernetes application. T
 
 Helm also makes it easier to create different environments (dev/test/prod) which we will see the benefit of in later tutorials.
 
+**NOTE: This walk-through is significantly different to previous walk-throughs in the series, as we describe the _process_ of getting to the result you see in the repo. This involves copying previous resources and modifying them to work progressively towards a working solution.**
+
 ## Motivation
 
 In all the previous walkthroughs, we deployed our Kubernetes app using the `kubectl` command line application. This was painful because we had to remember to create the deployment and the service each time we wanted to release a new version of our app. If we created any more Kubernetes resources, then we'd have to remember to manually deploy those each time too.
