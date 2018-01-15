@@ -178,51 +178,15 @@ First, a quick explanation of the syntax:
 `.Values.web.name` is a reference to the `name` value under the `web` data structure at the root of our `values.yaml` file.
 Whenever you want to refer to a variable in the `values.yaml` file, you must start with `.Values`. You can then pull values out of the data structures you have defined using the dot syntax.
 
-### Referencing Kubernetes resource files 
-
-
-For brevity, I'll be referring to the nested structures in the yaml files to describe which sections need modifying.
-For example, in `dev.ks.deployment.yaml` the reference `Metadata.labels.run` refers to the annotated line shown below:
-
-```yaml
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-    creationTimestamp: null
-    labels:
-        run: ks6web # THIS LINE
-    name: ks6web
-spec:
-[...]
-```
-
 ### Updating the resources from `values.yaml`
 
 #### `dev.ks.deployment.yaml`
 
-| Yaml resource key | Value |
-| --- | --- |
-| `metadata.labels.run` | `{{ .Release.Name }}-{{ .Values.web.name }}` |
-| `metadata.name` | `{{ .Release.Name }}-{{ .Values.web.name }}` |
-| `spec.selector.matchLabels.run` | `{{ .Release.Name }}-{{ .Values.web.name }}` |
-| `spec.template.metadata.labels.run` | `{{ .Release.Name }}-{{ .Values.web.name }}` |
-| `spec.template.spec.containers[0].image` | `{{ .Values.frontend.image.repo }}:{{ .Values.frontend.image.tag }}` |
-| `spec.template.spec.containers[0].name` | `{{ .Values.frontend.name }}` |
-| `spec.template.spec.containers[0].containerPort` | `{{ .Values.frontend.containerPort }}` |
-| `spec.template.spec.containers[1].image` | `{{ .Values.webserver.image.repo }}:{{ .Values.webserver.image.tag }}` |
-| `spec.template.spec.containers[1].name` | `{{ .Values.webserver.name }}` |
-| `spec.template.spec.containers[1].containerPort` | `{{ .Values.frontend.containerPort }}` |
-| `spec.volumes[0].hostPath.path` | `{{ .Values.mountDir }}/server` |
-| `spec.volumes[1].hostPath.path` | `{{ .Values.mountDir }}/app/src` |
+<img src="https://raw.githubusercontent.com/red-gate/ks/master/ks6/images/helm-ks-deployment-diff.png" width="400" />
 
 #### `dev.ks.service.yaml`
 
-| Yaml resource key | Value |
-| --- | --- |
-| `metadata.labels.run` | `{{ .Release.Name }}-{{ .Values.web.name }}-service` |
-| `metadata.name` | `{{ .Release.Name }}-{{ .Values.web.name }}-service` |
-| `spec.ports[0].targetPort` | `{{ .Values.frontend.containerPort }}` |
-| `spec.selector.run` | `{{ .Release.Name }}-{{ .Values.web.name }}` |
+<img src="https://raw.githubusercontent.com/red-gate/ks/master/ks6/images/helm-ks-service-diff.png" width="400" />
 
 ## Deploying the chart
 
