@@ -117,7 +117,7 @@ To know more about `helm init` see the [documentation](https://github.com/kubern
     ➜ pwd
      ~/dev/github/redgate/ks/ks5/
 
-    ➜ cp ../ks5/config/dev.* ./ks/templates/
+    ➜ cp ../ks4/config/dev.* ./ks/templates/
 
     # Rename to remove the 'dev' prefix
     ➜ mv ./ks/dev.ks.deployment.yaml ./ks/ks.deployment.yaml
