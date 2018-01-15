@@ -14,9 +14,11 @@ The problem is that _**we**_ have to remember exactly how to deploy the applicat
 
 ## Helm
 
-[Helm](https://github.com/kubernetes/helm) is one of the solutions to this problem. According to the  documentation:
+[Helm](https://github.com/kubernetes/helm) is one of the solutions to this problem. According to the documentation:
 
-> Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources.
+> [Helm is a tool for managing Kubernetes charts. Charts are packages of pre-configured Kubernetes resources.](https://github.com/kubernetes/helm#kubernetes-helm)
+
+> [A chart is organized as a collection of files inside of a directory.](https://github.com/kubernetes/helm/blob/master/docs/charts.md#the-chart-file-structure)
 
 In other words, Helm allows us to work from the mental model of managing our "application" on our cluster, instead of individual Kubernetes resources via `kubectl`.
 
