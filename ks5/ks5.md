@@ -128,8 +128,8 @@ Now that helm is ready we can start changing our `ks4` baseline so that it uses 
     ➜ cp ../ks4/config/dev.* ./ks/templates/
 
     # Rename to remove the 'dev' prefix
-    ➜ mv ./ks/dev.ks.deployment.yaml ./ks/ks.deployment.yaml
-    ➜ mv ./ks/dev.ks.service.yaml ./ks/ks.service.yaml
+    ➜ mv ./ks/templates/dev.ks.deployment.yaml ./ks/templates/ks.deployment.yaml
+    ➜ mv ./ks/templates/dev.ks.service.yaml ./ks/templates/ks.service.yaml
 
     ➜ tree ks
     ks/
@@ -206,6 +206,12 @@ Whenever you want to refer to a variable in the `values.yaml` file, you must sta
 ## Deploying the chart
 
 At this point, you're ready to deploy the Kubernetes chart.
+
+Start minikube
+
+    ```bash
+    ➜ minikube start
+    ```
 
 In one terminal, leave this running:
 
