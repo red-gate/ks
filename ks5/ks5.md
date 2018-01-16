@@ -201,6 +201,12 @@ Whenever you want to refer to a variable in the `values.yaml` file, you must sta
 
 At this point, you're ready to deploy the Kubernetes chart.
 
+Start minikube
+
+    ```bash
+    ➜ minikube start
+    ```
+
 In one terminal, leave this running:
 
 ```bash
