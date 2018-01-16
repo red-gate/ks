@@ -240,12 +240,12 @@ This also means we will not use volumes in our **test** environment, only in our
     version: 0.2.0
     ```
 
-1. create a release 
+1. create a release
 
     ```bash
     helm install ./ks -n ks
 
-    # If you already have a release with this name, 
+    # If you already have a release with this name,
     # then run the following instead to do an upgrade:
     # helm upgrade ks ./ks
     ```
