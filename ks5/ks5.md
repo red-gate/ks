@@ -8,7 +8,7 @@ Helm also makes it easier to create different environments (dev/test/prod) which
 
 ## Motivation
 
-In all the previous walkthroughs, we deployed our Kubernetes app using the `kubectl` command line application. This was painful because we had to remember to create the deployment and the service each time we wanted to release a new version of our app. If we created any more Kubernetes resources, then we'd have to remember to manually deploy those each time too.
+In all the previous walkthroughs, we deployed our Kubernetes app using the `kubectl` command line application. This was painful because we had to remember to create the _deployment_ and the _service_ each time we wanted to release a new version of our app. If we created any more Kubernetes resources, then we'd have to remember to manually deploy those each time too.
 
 On top of that, we also had to remember the exact file names of our Kubernetes manifest files. If we've built some automation around this, then we'd need to update our scripts each time we made any changes to filenames.
 
@@ -43,6 +43,8 @@ Once you have Helm installed, the next thing is to initialize the command line a
 To know more about `helm init` see the [documentation](https://github.com/kubernetes/helm/blob/master/docs/helm/helm_init.md).
 
 ### Creating the chart
+
+Now that helm is ready we can start changing our `ks4` baseline so that it uses helm.
 
 1. Create the ks5 directory
 
