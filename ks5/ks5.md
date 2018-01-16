@@ -51,8 +51,14 @@ Now that helm is ready we can start changing our `ks4` baseline so that it uses 
     ```bash
     ➜ pwd
      ~/dev/github/redgate/ks/
+     
     ➜ mkdir ks5
+
+    # Delete node_modules first so the cp operation doesnt take too long
+    ➜ rm -rf ./ks4/app/node_modules
+
     ➜ cp -r ./ks4/ ./ks5/
+
     ➜ cd ks5
     ```
 
