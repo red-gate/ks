@@ -106,6 +106,7 @@ Now that helm is ready we can start changing our `ks4` baseline so that it uses 
     # Delete NOTES.txt file
     # The contents of this are shown when you 'install' the chart.
     # But we won't use it in this walk-through
+
     ➜ rm ks/templates/NOTES.txt
 
     ➜ tree ks
@@ -213,7 +214,7 @@ Start minikube
     ➜ minikube start
     ```
 
-In one terminal, leave this running:
+In one terminal, mount ks5 source code (leave this running):
 
 ```bash
 ➜ pwd
