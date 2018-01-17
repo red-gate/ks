@@ -3,32 +3,32 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: ks5web
-  name: ks5web
+    run: {{ .Release.Name }}-{{ .Values.web.name }}
+  name: {{ .Release.Name }}-{{ .Values.web.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: ks5web
+      run: {{ .Release.Name }}-{{ .Values.web.name }}
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: ks5web
+        run: {{ .Release.Name }}-{{ .Values.web.name }}
     spec:
       containers:
-      - image: ks5webimage:latest
-        name: ks5web
+      - image: {{ .Values.frontend.image.repo }}:{{ .Values.frontend.image.tag }}
+        name: {{ .Values.frontend.name }}
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 3000
+        - containerPort: {{ .Values.frontend.containerPort }}
         resources: {}
         volumeMounts:
           - mountPath: /app/src
             name: frontend
-      - image: ks5webserverimage:latest
-        name: ks5webserver
+      - image: {{ .Values.webserver.image.repo }}:{{ .Values.webserver.image.tag }}
+        name: {{ .Values.webserver.name }}
         imagePullPolicy: IfNotPresent
         command: ["python"]
         args: ["-m", "flask", "run"]
@@ -38,7 +38,7 @@ spec:
         - name: FLASK_CONFIG
           value: "dev"
         ports:
-        - containerPort: 5000
+        - containerPort: {{ .Values.webserver.containerPort }}
         resources: {}
         volumeMounts:
           - mountPath: /server
@@ -46,8 +46,8 @@ spec:
       volumes:
       - name: python-server
         hostPath:
-          path: /mounted-ks5-src/server
+          path: {{ .Values.mountDir }}/server
       - name: frontend
         hostPath:
-          path: /mounted-ks5-src/app/src
+          path: {{ .Values.mountDir }}/app/src
 status: {}

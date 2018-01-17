@@ -38,11 +38,13 @@ To deploy, scale and manage containerized applications.
 
 ## Evolution of our app
 
-1. [ks0: introduction](./ks0/ks0.md)
+[ks0: an introduction to our ks series](./ks0/ks0.md)
+
 1. [ks1: build a React app with kubernetes](./ks1/ks1.md)
 1. [ks2: make minikube detect React code changes](./ks2/ks2.md)
 1. [ks3: add a python web server that hosts an API](./ks3/ks3.md)
 1. [ks4: make minikube detect Python code changes](./ks4/ks4.md)
-1. [ks5: create a test environment](./ks5/ks5.md)
+1. [ks5: use helm to deploy the application](./ks5/ks5.md)
+1. [ks6: create a test environment using helm](./ks6/ks6.md)
 1. ...
 1. create a prod environment

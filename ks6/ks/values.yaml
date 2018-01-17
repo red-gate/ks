@@ -1,0 +1,20 @@
+environment: testing
+
+web:
+  name: ks6web
+
+mountDir: /mounted-ks6-src
+
+frontend:
+  name: ks6webfrontend
+  image:
+    repo: ks6webimage
+    tag: latest
+  containerPort: 3000
+
+webserver:
+  name: ks6webserver
+  image:
+    repo: ks6webserverimage
+    tag: latest
+  containerPort: 5000
