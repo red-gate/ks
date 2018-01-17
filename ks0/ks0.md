@@ -1,7 +1,10 @@
 Adopting Kubernetes step by step
 ===
 
-## Why Docker and Kubernetes?
+**Note:** Original article is available on medium:
+[Adopting Kubernetes step by step](https://medium.com/ingeniouslysimple/adopting-kubernetes-step-by-step-f93093c13dfe)
+
+## Why Docker and Kubernetes
 
 Containers allow us to build, ship and run distributed applications. They remove the machine constraints from applications and lets us create a complex application in a deterministic fashion.
 
