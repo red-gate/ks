@@ -249,7 +249,7 @@ STATUS: DEPLOYED
 RESOURCES:
 ==> v1/Service
 NAME            TYPE          CLUSTER-IP  EXTERNAL-IP  PORT(S)       AGE
-ks5web-service  LoadBalancer  10.0.0.173  <pending>    80:31316/TCP  0s
+ks5web-service  NodePort  10.0.0.173  <pending>    80:31316/TCP  0s
 
 ==> v1beta1/Deployment
 NAME    DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
