@@ -233,6 +233,11 @@ In another terminal:
 ➜ eval $(minikube docker-env)
 ➜ docker build -f ./server/Dockerfile -t ks5webserverimage .
 ➜ docker build -f ./web/Dockerfile -t ks5webimage .
+```
+
+Now we're ready to install the application with helm. The command `helm install` injects the values from `Values.yaml` into your Kubernetes resources and then deploys them all onto the cluster (in the same way `kubectl` worked with the `create` command for individual resources). Helm also keeps track of the "release" you make, which allows you to track release history, or rollback to a previous version among other things.
+
+```bash
 ➜ helm install ./ks/ -n ks
 
 NAME:   ks
