@@ -288,6 +288,11 @@ This also means we will not use volumes in our **test** environment, only in our
     environment: dev
     ```
 
+    Make sure you have the web frontend image built for the dev environment
+    ```bash
+    ➜ docker build -f ./web/Dockerfile -t ks6webimage .
+    ```
+
     Create dev release
 
     ```bash
