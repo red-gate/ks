@@ -1,4 +1,4 @@
-environment: testing
+environment: dev
 
 web:
   name: ks7web
