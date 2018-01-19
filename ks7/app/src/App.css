@@ -8,3 +8,9 @@
 .App-header{
   display: flex;
 }
+
+.App-intro{
+  display: flex;
+  justify-content: flex-end;
+  font-style: italic;
+}

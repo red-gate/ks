@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './Todo.css'
+
 export class AddTask extends Component {
 
   constructor(props) {
@@ -16,7 +18,13 @@ export class AddTask extends Component {
   render() {
     return <div className='add-task'>
       <form onSubmit={this.addTaskSubmit}>
-        <input type='text' name='name' placeholder='What needs to be done?' />
+        <input
+          className='add-task-name'
+          type='text'
+          name='name'
+          placeholder='What needs to be done?'
+          size="30"
+        />
       </form>
     </div>
   }
@@ -34,15 +42,13 @@ export class TodoList extends Component {
 
   render() {
     return <div className='tasks'>
-      <ul>
-        {this.props.items.map((item, i) => 
-          <li key={'item-' + i}>
-            <div onClick={() => this.updateItemClick(item)}>{item.done? '☑': '☐'}</div>
-            <div>{item.name}</div>
-            <div onClick={() => this.deleteTaskClick(item.name)}>x</div>
-          </li>
-        )}
-      </ul>
+      {this.props.items.map((item, i) => 
+        <div className='task-item' key={'item-' + i}>
+          <div className='task-item-tick' title='click to do or undo a task' onClick={() => this.updateItemClick(item)}>{item.done? '☑': '☐'}</div>
+          <div className='task-item-name'>{item.name}</div>
+          <div className='task-item-delete' title='click to remove a task from your list' onClick={() => this.deleteTaskClick(item.name)}>x</div>
+        </div>
+      )}
     </div>
   }
 }
