@@ -51,8 +51,18 @@ class App extends Component {
       done: false
     }
 
-    this.setState({
-      todoItems: this.state.todoItems.concat(newItem)
+    const payload = { newItem }
+
+    fetch('/api/todo/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload),
+    }).then(response => {
+      return response.json()
+    }).then(json => {
+      this.setState({ todoItems: json.todoList})
     })
   }
 
