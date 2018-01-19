@@ -41,3 +41,21 @@ def delete():
     return jsonify({
         'todoList': todo_list
     })
+
+def item_update():
+    'POST update item in list'
+    current_app.logger.info('todo xcontroller called, func: item_update')
+
+    data = json.loads(request.data.decode('utf-8'))
+    item = data['itemToUpdate']
+
+    results = [x for x in todo_list if x['name'] == item['name']]
+
+    if results:
+        current_app.logger.info('found results')
+        index = todo_list.index(results[0])
+        todo_list[index] = item
+
+    return jsonify({
+        'todoList': todo_list
+    })

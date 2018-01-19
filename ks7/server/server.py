@@ -28,6 +28,7 @@ app.add_url_rule('/api/hello', view_func=controller_hello.hello, methods=['GET']
 app.add_url_rule('/api/todo/list', view_func=controller_todo.list_items, methods=['GET'])
 app.add_url_rule('/api/todo/add', view_func=controller_todo.add, methods=['POST'])
 app.add_url_rule('/api/todo/delete', view_func=controller_todo.delete, methods=['POST'])
+app.add_url_rule('/api/todo/item/update', view_func=controller_todo.item_update, methods=['POST'])
 
 def serve_static_paths(current_app):
     'serve static paths if in production mode'

@@ -28,11 +28,19 @@ export class TodoList extends Component {
     this.props.onTaskDeleted(itemName)
   }
 
+  updateItemClick(item){
+    this.props.onTaskUpdate(item)
+  }
+
   render() {
     return <div className='tasks'>
       <ul>
         {this.props.items.map((item, i) => 
-          <li key={'item-' + i}>{item.name} <div onClick={() => this.deleteTaskClick(item.name)}>x</div></li>
+          <li key={'item-' + i}>
+            <div onClick={() => this.updateItemClick(item)}>{item.done? '☑': '☐'}</div>
+            <div>{item.name}</div>
+            <div onClick={() => this.deleteTaskClick(item.name)}>x</div>
+          </li>
         )}
       </ul>
     </div>
