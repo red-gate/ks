@@ -22,11 +22,16 @@ export class AddTask extends Component {
 }
 
 export class TodoList extends Component {
+
+  deleteTaskClick(itemName){
+    this.props.onTaskDeleted(itemName)
+  }
+  
   render() {
     return <div className='tasks'>
       <ul>
         {this.props.items.map((item, i) => 
-          <li key={'item-' + i}>{item.name}</li>
+          <li key={'item-' + i}>{item.name} <div onClick={() => this.deleteTaskClick(item.name)}>x</div></li>
         )}
       </ul>
     </div>

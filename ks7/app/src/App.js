@@ -14,6 +14,7 @@ class App extends Component {
     }
 
     this.onTaskAdded = this.onTaskAdded.bind(this)
+    this.onTaskDeleted = this.onTaskDeleted.bind(this)
 
     this.fetchMessage()
     this.fetchTodoItems()
@@ -66,6 +67,22 @@ class App extends Component {
     })
   }
 
+  onTaskDeleted(taskName) {
+    const itemToDelete = this.state.todoItems.find(x => x.name === taskName)
+    const payload = { itemToDelete }
+    !!itemToDelete && fetch('/api/todo/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(response => {
+      return response.json()
+    }).then(json => {
+      this.setState({ todoItems: json.todoList})
+    })
+  }
+
   render() {
     return <div className='App'>
       <header className='App-header'>
@@ -76,7 +93,7 @@ class App extends Component {
           hello {this.state.message}
       </p>
       <AddTask onTaskAdded={this.onTaskAdded} />
-      <TodoList items={this.state.todoItems} />
+      <TodoList items={this.state.todoItems} onTaskDeleted={this.onTaskDeleted}/>
     </div>
   }
 }

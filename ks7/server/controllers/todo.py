@@ -33,7 +33,7 @@ def delete():
     current_app.logger.info('todo controller called, func: delete')
 
     data = json.loads(request.data.decode("utf-8"))
-    item = data['item']
+    item = data['itemToDelete']
 
     if item in todo_list:
         todo_list.remove(item)
