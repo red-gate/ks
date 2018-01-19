@@ -10,6 +10,7 @@ export class AddTask extends Component {
   addTaskSubmit(e) {
     e.preventDefault()
     this.props.onTaskAdded(e.target.name.value)
+    e.target.name.value = ''
   }
 
   render() {
@@ -26,7 +27,7 @@ export class TodoList extends Component {
   deleteTaskClick(itemName){
     this.props.onTaskDeleted(itemName)
   }
-  
+
   render() {
     return <div className='tasks'>
       <ul>
