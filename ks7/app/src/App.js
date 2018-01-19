@@ -14,13 +14,29 @@ class App extends Component {
     }
 
     this.onTaskAdded = this.onTaskAdded.bind(this)
+
     this.fetchMessage()
+    this.fetchTodoItems()
+  }
+
+  fetchTodoItems(){
+    fetch('/api/todo/list', {
+      'Content': 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      return response.json()
+    }).then(json => {
+      this.setState({ todoItems: json.todoList})
+    })
   }
 
   fetchMessage() {
     fetch('/api/hello', {
+      'Content': 'GET',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     }).then(response => {
       return response.json()
