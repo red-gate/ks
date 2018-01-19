@@ -20,7 +20,7 @@ def add():
     current_app.logger.info('todo controller called, func: add')
 
     data = json.loads(request.data.decode("utf-8"))
-    item = data['item']
+    item = data['newItem']
 
     todo_list.append(item)
 
