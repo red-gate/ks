@@ -67,11 +67,11 @@ class App extends Component {
   }
 
   render() {
-    return <div className="App">
-      <header className="App-header">
-        <h1 className="App-title">ks7 app</h1>
+    return <div className='App'>
+      <header className='App-header'>
+        <h1 className='App-title'>ks7 app</h1>
       </header>
-      <p className="App-intro">
+      <p className='App-intro'>
         ks7 app here...
           hello {this.state.message}
       </p>

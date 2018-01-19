@@ -13,7 +13,7 @@ export class AddTask extends Component {
   }
 
   render() {
-    return <div className="add-task">
+    return <div className='add-task'>
       <form onSubmit={this.addTaskSubmit}>
         <input type='text' name='name' placeholder='What needs to be done?' />
       </form>
