@@ -309,6 +309,12 @@ To test or develop against ks7 go to section [Set up and start ks7](#set-up-and-
     ➜ cd ks7
     ➜ minikube start
     ➜ eval $(minikube docker-env)
+
+    # Ensure you've built the react app first
+    ➜ cd app
+    ➜ yarn
+    ➜ yarn build
+    
     ➜ docker build -f ./server/Dockerfile -t ks7webserverimage .
     ➜ docker build -f ./web/Dockerfile -t ks7webimage .
     ```
