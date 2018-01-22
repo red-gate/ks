@@ -44,7 +44,7 @@ def delete():
 
 def item_update():
     'POST update item in list'
-    current_app.logger.info('todo xcontroller called, func: item_update')
+    current_app.logger.info('todo controller called, func: item_update')
 
     data = json.loads(request.data.decode('utf-8'))
     item = data['itemToUpdate']
