@@ -1,4 +1,4 @@
-'ks6 web server'
+'ks7 web server'
 
 import logging
 from os import getenv

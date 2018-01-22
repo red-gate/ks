@@ -219,9 +219,9 @@ To test or develop against ks7 go to section [Set up and start ks7](#set-up-and-
     And call the API `/api/todo/add`.
 
     ```jsx
-    onTaskAdded(taksName) {
+    onTaskAdded(taskName) {
         const newItem = {
-            name: taksName,
+            name: taskName,
             done: false,
             id: Date.now()
         }
@@ -255,8 +255,9 @@ To test or develop against ks7 go to section [Set up and start ks7](#set-up-and-
     ```jsx
     onTaskUpdate(item){
         const itemToUpdate = this.state.todoItems.find(x => x.id === item.id)
-        itemToUpdate.done = !item.done
-        const payload = { itemToUpdate }
+        const copyItem = {...itemToUpdate}
+        copyItem.done = !copyItem.done
+        const payload = { itemToUpdate: copyItem }
 
         !!itemToUpdate && fetch('/api/todo/item/update', {
             method: 'POST',

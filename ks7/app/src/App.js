@@ -47,9 +47,9 @@ class App extends Component {
     })
   }
 
-  onTaskAdded(taksName) {
+  onTaskAdded(taskName) {
     const newItem = {
-      name: taksName,
+      name: taskName,
       done: false,
       id: Date.now()
     }
@@ -71,8 +71,9 @@ class App extends Component {
 
   onTaskUpdate(item){
     const itemToUpdate = this.state.todoItems.find(x => x.id === item.id)
-    itemToUpdate.done = !item.done
-    const payload = { itemToUpdate }
+    const copyItem = {...itemToUpdate}
+    copyItem.done = !copyItem.done
+    const payload = { itemToUpdate: copyItem }
 
     !!itemToUpdate && fetch('/api/todo/item/update', {
       method: 'POST',
