@@ -56,7 +56,7 @@ To test or develop against ks7 go to section [Set up and start ks7](#set-up-and-
 
     In the next ks episode we will care about the right way to do this and modify the `server/controllers/todo.py` accordingly.
 
-1. create a AddTask component in the frontend
+1. create a `<AddTask>` component in the frontend
 
     The `<AddTask>` component's responsibility is to allow user to submit a new task into the todo list.
 
@@ -90,7 +90,7 @@ To test or develop against ks7 go to section [Set up and start ks7](#set-up-and-
     }
     ```
 
-1. Create a TodoList component
+1. Create a `<TodoList>` component
 
     The `<TodoList>` component's responsibility is to display the todo list as well as allowing the user perform the following actions
 
