@@ -32,8 +32,8 @@ export class AddTask extends Component {
 
 export class TodoList extends Component {
 
-  deleteTaskClick(itemName){
-    this.props.onTaskDeleted(itemName)
+  deleteTaskClick(itemId){
+    this.props.onTaskDeleted(itemId)
   }
 
   updateItemClick(item){
@@ -42,11 +42,11 @@ export class TodoList extends Component {
 
   render() {
     return <div className='tasks'>
-      {this.props.items.map((item, i) => 
-        <div className='task-item' key={'item-' + i}>
+      {this.props.items.map(item => 
+        <div className='task-item' key={'item-' + item.id}>
           <div className='task-item-tick' title='click to do or undo a task' onClick={() => this.updateItemClick(item)}>{item.done? '☑': '☐'}</div>
           <div className='task-item-name'>{item.name}</div>
-          <div className='task-item-delete' title='click to remove a task from your list' onClick={() => this.deleteTaskClick(item.name)}>x</div>
+          <div className='task-item-delete' title='click to remove a task from your list' onClick={() => this.deleteTaskClick(item.id)}>x</div>
         </div>
       )}
     </div>

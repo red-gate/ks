@@ -49,7 +49,7 @@ def item_update():
     data = json.loads(request.data.decode('utf-8'))
     item = data['itemToUpdate']
 
-    results = [x for x in todo_list if x['name'] == item['name']]
+    results = [x for x in todo_list if x['id'] == item['id']]
 
     if results:
         current_app.logger.info('found results')

@@ -50,7 +50,8 @@ class App extends Component {
   onTaskAdded(taksName) {
     const newItem = {
       name: taksName,
-      done: false
+      done: false,
+      id: Date.now()
     }
 
     const payload = { newItem }
@@ -69,7 +70,7 @@ class App extends Component {
   }
 
   onTaskUpdate(item){
-    const itemToUpdate = this.state.todoItems.find(x => x.name === item.name)
+    const itemToUpdate = this.state.todoItems.find(x => x.id === item.id)
     itemToUpdate.done = !item.done
     const payload = { itemToUpdate }
 
@@ -86,8 +87,8 @@ class App extends Component {
     })
   }
 
-  onTaskDeleted(taskName) {
-    const itemToDelete = this.state.todoItems.find(x => x.name === taskName)
+  onTaskDeleted(taskId) {
+    const itemToDelete = this.state.todoItems.find(x => x.id === taskId)
     const payload = { itemToDelete }
     !!itemToDelete && fetch('/api/todo/delete', {
       method: 'POST',
