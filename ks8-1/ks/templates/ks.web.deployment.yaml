@@ -39,6 +39,16 @@ spec:
           value: {{ if eq .Values.environment "dev" }}"1"{{ else }}"0"{{ end }}
         - name: FLASK_CONFIG
           value: {{ .Values.environment }}
+        - name: DB_NAME
+          value: {{ .Values.database.config.dbName }}
+        - name: DB_USER
+          value: {{ .Values.database.config.dbUser }}
+        - name: DB_PORT
+          value: "{{ .Values.database.containerPort }}"
+        - name: DB_HOST
+          value: "{{ .Release.Name }}-{{ .Values.database.name }}-service"
+        - name: DB_PASSWORD
+          value: {{ .Values.database.config.dbPassword }}
         ports:
         - containerPort: {{ .Values.webserver.containerPort }}
         resources: {}

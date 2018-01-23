@@ -1,4 +1,5 @@
 'ks7 config'
+import os
 
 class Config(object):
     'base class for application configuration details.'
@@ -7,7 +8,14 @@ class Config(object):
     @staticmethod
     def init_app(app):
         'init app'
-        pass
+        db_name = os.getenv('DB_NAME')
+        db_user = os.getenv('DB_USER')
+        db_host = os.getenv('DB_HOST')
+        db_port = os.getenv('DB_PORT')
+        db_password = os.getenv('DB_PASSWORD')
+        app.config['CONN_STRING'] = ("dbname='%s' user='%s' host='%s' port='%s' password='%s'" % 
+                                     (db_name, db_user, db_host, db_port, db_password))
+
 class DevelopmentConfig(Config):
     'dev config'
     DEBUG = True

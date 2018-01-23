@@ -25,3 +25,7 @@ database:
     repo: postgres
     tag: 9.5
   containerPort: 5432
+  config:
+    dbName: ks
+    dbUser: redgate
+    dbPassword: ""

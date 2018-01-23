@@ -23,7 +23,9 @@ spec:
         resources: {}
         env:
         - name: POSTGRES_USER
-          value: redgate
+          value: {{ .Values.database.config.dbUser }}
         - name: POSTGRES_DB
-          value: ks
+          value: {{ .Values.database.config.dbName }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.database.config.dbPassword }}
 status: {}
