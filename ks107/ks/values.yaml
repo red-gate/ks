@@ -1,20 +1,20 @@
 environment: dev
 
 web:
-  name: ks7web
+  name: ks107web
 
-mountDir: /mounted-ks7-src
+mountDir: /mounted-ks107-src
 
 frontend:
-  name: ks7webfrontend
+  name: ks107webfrontend
   image:
-    repo: ks7webimage
+    repo: ks107webimage
     tag: latest
   containerPort: 3000
 
 webserver:
-  name: ks7webserver
+  name: ks107webserver
   image:
-    repo: ks7webserverimage
+    repo: ks107webserverimage
     tag: latest
   containerPort: 5000
