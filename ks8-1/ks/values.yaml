@@ -1,20 +1,27 @@
 environment: dev
 
 web:
-  name: ks7web
+  name: ks8web
 
-mountDir: /mounted-ks7-src
+mountDir: /mounted-ks8-src
 
 frontend:
-  name: ks7webfrontend
+  name: ks8webfrontend
   image:
-    repo: ks7webimage
+    repo: ks8webimage
     tag: latest
   containerPort: 3000
 
 webserver:
-  name: ks7webserver
+  name: ks8webserver
   image:
-    repo: ks7webserverimage
+    repo: ks8webserverimage
     tag: latest
   containerPort: 5000
+
+database:
+  name: ks8db
+  image:
+    repo: postgres
+    tag: 9.5
+  containerPort: 5432
