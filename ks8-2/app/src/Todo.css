@@ -1,0 +1,43 @@
+.add-task{
+    display: flex;
+    justify-content: center;
+}
+
+.add-task-name{
+    font-size: 25pt;
+    font-style: italic;
+    padding: .5em;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    padding-top: 4em;
+    font-size: 14pt;
+}
+
+.task-item {
+    display: flex;
+    padding: 1em;
+    align-self: center;
+}
+
+.task-item:hover{
+    background: #f3f3f3;
+}
+
+.task-item-tick {
+    padding-right: 1em;
+    cursor: pointer;
+    font-size: 30pt;
+}
+
+.task-item-name{
+    align-self: center;
+}
+
+.task-item-delete {
+    padding-left: 4em;
+    cursor: pointer;
+    align-self: center;
+}

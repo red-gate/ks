@@ -1,0 +1,32 @@
+environment: dev
+
+web:
+  name: ks8web
+
+mountDir: /mounted-ks8-src
+
+frontend:
+  name: ks8webfrontend
+  image:
+    repo: ks8webimage
+    tag: latest
+  containerPort: 3000
+
+webserver:
+  name: ks8webserver
+  image:
+    repo: ks8webserverimage
+    tag: latest
+  containerPort: 5000
+
+database:
+  name: ks8db
+  image:
+    repo: ks8dbimage
+    tag: latest
+  containerPort: 5432
+  config:
+    dbName: ks
+    dbUser: redgate
+    dbPassword: ""
+  externalName: 192.168.64.1
