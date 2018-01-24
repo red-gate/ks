@@ -5,14 +5,15 @@ from flask import request
 from flask import jsonify
 from flask import current_app
 
-# in memory todo list storage
-todo_list = []
+import data.database as database
 
 def list_items():
     'GET todo list'
     current_app.logger.info('todo controller called, func: list')
+    db = database.Database(current_app.config['CONN_STRING'])
+    items = db.get_items()
     return jsonify({
-        'todoList': todo_list
+        'todoList': items
     })
 
 def add():
@@ -22,10 +23,12 @@ def add():
     data = json.loads(request.data.decode("utf-8"))
     item = data['newItem']
 
-    todo_list.append(item)
+    db = database.Database(current_app.config['CONN_STRING'])
+    db.insert_item(item)
+    items = db.get_items()
 
     return jsonify({
-        'todoList': todo_list
+        'todoList': items
     })
 
 def delete():
@@ -35,11 +38,12 @@ def delete():
     data = json.loads(request.data.decode("utf-8"))
     item = data['itemToDelete']
 
-    if item in todo_list:
-        todo_list.remove(item)
+    db = database.Database(current_app.config['CONN_STRING'])
+    db.delete_item(item)
+    items = db.get_items()
 
     return jsonify({
-        'todoList': todo_list
+        'todoList': items
     })
 
 def item_update():
@@ -49,13 +53,10 @@ def item_update():
     data = json.loads(request.data.decode('utf-8'))
     item = data['itemToUpdate']
 
-    results = [x for x in todo_list if x['id'] == item['id']]
-
-    if results:
-        current_app.logger.info('found results')
-        index = todo_list.index(results[0])
-        todo_list[index] = item
+    db = database.Database(current_app.config['CONN_STRING'])
+    db.update_item(item)
+    items = db.get_items()
 
     return jsonify({
-        'todoList': todo_list
+        'todoList': items
     })

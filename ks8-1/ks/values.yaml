@@ -22,8 +22,8 @@ webserver:
 database:
   name: ks8db
   image:
-    repo: postgres
-    tag: 9.5
+    repo: ks8dbimage
+    tag: latest
   containerPort: 5432
   config:
     dbName: ks
