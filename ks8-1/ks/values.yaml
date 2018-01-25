@@ -3,7 +3,7 @@ environment: dev
 web:
   name: ks8web
 
-mountDir: /mounted-ks8-src
+mountDir: /mounted-ks8-1-src
 
 frontend:
   name: ks8webfrontend
