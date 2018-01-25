@@ -32,8 +32,8 @@ spec:
       - image: {{ .Values.webserver.image.repo }}:{{ .Values.webserver.image.tag }}
         name: {{ .Values.webserver.name }}
         imagePullPolicy: IfNotPresent
-        command: ["python"]
-        args: ["-m", "flask", "run", "--host=0.0.0.0"]
+        command: ["dotnet"]
+        args: ["out/server.dll"]
         env:
         - name: FLASK_DEBUG
           value: {{ if eq .Values.environment "dev" }}"1"{{ else }}"0"{{ end }}
@@ -45,9 +45,9 @@ spec:
         {{ if eq .Values.environment "dev"}}
         volumeMounts:
           - mountPath: /server
-            name: python-server
+            name: dotnet-server
       volumes:
-      - name: python-server
+      - name: dotnet-server
         hostPath:
           path: {{ .Values.mountDir }}/server
       - name: frontend
