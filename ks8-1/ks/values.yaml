@@ -1,19 +1,19 @@
 environment: dev
 
 web:
-  name: ks8-1web
+  name: ks8web
 
 mountDir: /mounted-ks8-1-src
 
 frontend:
-  name: ks8-1webfrontend
+  name: ks8webfrontend
   image:
-    repo: ks8-1webimage
+    repo: ks8webimage
     tag: latest
   containerPort: 3000
 
 webserver:
-  name: ks8-1webserver
+  name: ks8webserver
   image:
     repo: ks8webserverimage
     tag: latest
