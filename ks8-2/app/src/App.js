@@ -107,10 +107,10 @@ class App extends Component {
   render() {
     return <div className='App'>
       <header className='App-header'>
-        <h1 className='App-title'>ks8-1 app</h1>
+        <h1 className='App-title'>ks8-2 app</h1>
       </header>
       <p className='App-intro'>
-        ks8-1 message from web server: {this.state.message}
+      ks8-2 message from web server: {this.state.message}
       </p>
       <AddTask onTaskAdded={this.onTaskAdded} />
       <TodoList

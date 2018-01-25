@@ -1,9 +1,9 @@
-'ks8-1 config'
+'ks8-2 config'
 import os
 
 class Config(object):
     'base class for application configuration details.'
-    SECRET_KEY = 'ks8-1'
+    SECRET_KEY = 'ks8-2'
 
     @staticmethod
     def init_app(app):
