@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.database.name }}-service
+  name: {{ .Release.Name }}-{{ .Values.database.name }}-service
+spec:
+  ports:
+  - port: {{ .Values.database.containerPort }}
+    protocol: TCP
+    targetPort: {{ .Values.database.containerPort }}
+  selector:
+    run: {{ .Release.Name }}-{{ .Values.database.name }}
+  type: NodePort

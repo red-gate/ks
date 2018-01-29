@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: {{ .Release.Name }}-{{ .Values.database.name }}
+  name: {{ .Release.Name }}-{{ .Values.database.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: {{ .Release.Name }}-{{ .Values.database.name }}
+  template:
+    metadata:
+      labels:
+        run: {{ .Release.Name }}-{{ .Values.database.name }}
+    spec:
+      containers:
+      - image: {{ .Values.database.image.repo }}:{{ .Values.database.image.tag }}
+        name: {{ .Values.database.name }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.database.containerPort }}
+        resources: {}
+        env:
+        - name: POSTGRES_USER
+          value: {{ .Values.database.config.dbUser }}
+        - name: POSTGRES_DB
+          value: {{ .Values.database.config.dbName }}
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.database.config.dbPassword }}
+status: {}
