@@ -22,11 +22,13 @@ The real problem is that _**we**_ have to remember _**exactly**_ how to deploy t
 
 ```bash
 # Deploying an application to a cluster using kubectl...
-> kubectl create -f ./ks/web-deployment.yaml
-> kubectl create -f ./ks/web-service.yaml
+> kubectl create -f ./ks/web-api-deployment.yaml
+> kubectl create -f ./ks/web-api-service.yaml
 > kubectl create -f ./ks/nginx-deployment.yaml
 > kubectl create -f ./ks/nginx-service.yaml
-> kubectl create -f ./ks/worker-deployment.yaml
+> kubectl create -f ./ks/worker-deployment-1.yaml
+> kubectl create -f ./ks/worker-deployment-2.yaml
+> kubectl create -f ./ks/worker-service.yaml
 ```
 
 ## Helm to the rescue
