@@ -16,8 +16,6 @@ Altough this worked, it was painful because we had to run a command for each res
 
 You could avoid this by writing an automation script, but if you change the filenames or paths of your Kubernetes resources, then you need to update the script too.
 
-Alternatively, you could bundle all your Kubernetes resources into one YAML file, separating each resource with a document separator (three hyphens: `---`). This isn't ideal either, because now your source control history for each Kubernetes resource config is merged into one file.
-
 The real problem is that _**we**_ have to remember _**exactly**_ how to deploy the application _**step by step**_. Our "application" (i.e, all of our Kubernetes resources packaged together) is something kubectl has no idea about.
 
 ```bash
@@ -77,25 +75,22 @@ Helm keeps track of how many times an application has been deployed on a cluster
 
 ### Updates made easy
 
-Helm also handles any updates you want to make to your cluster.
-
-Maybe you've made changes to both the Web API server and the worker. You've got a new docker image for both of these resources and want to deploy the change.
-
-With helm, all you have to do is the following after updating the docker image version you want to use:
+If you have changes to your application (e.g a new docker image to deploy), all you have to do is the following after updating your yaml files:
 
 ```bash
 helm upgrade <release-name> <chart-directory>
 ```
 
-Helm does the hard work for you and figures out what has changed and what needs to be deployed. In this case, it notices the desired state of the cluster has a newer image version for the Web API server and worker. Helm therefore starts spinning up new pods with the specified docker image and terminates the other pods once the new ones are up and ready.
-
-No need for you to use `kubectl set image` or `kubectl patch` for each individual resource - just deploy your application as a unit with all of your changes in one operation.
+Helm does the hard work for you and figures out which bits need to be deployed.
 
 ## So how do I get started?
 
-You can check out our Kubernetes series on [github](https://github.com/red-gate/ks/). We've just released a [new walk-through](https://github.com/red-gate/ks/blob/master/ks5/ks5.md) on how to migrate an application from using `kubectl` to helm. There's [another walk-through](https://github.com/red-gate/ks/blob/master/ks6/ks6.md) there too, which is about how to leverage helm to create multiple different environments (e.g, dev/test/staging/production). 
+You can check out our Kubernetes series on [github](https://github.com/red-gate/ks/).
 
-You can also check out the official [helm documentation](https://docs.helm.sh/).
+* [Use helm to deploy an application](https://github.com/red-gate/ks/blob/master/ks5/ks5.md)
+* [Create a test environment using helm](https://github.com/red-gate/ks/blob/master/ks6/ks6.md)
+
+You can also read the [helm documentation](https://docs.helm.sh/).
 
 ## What's next?
 
