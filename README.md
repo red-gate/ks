@@ -14,6 +14,11 @@ To deploy, scale and manage containerized applications.
 * [Why do I need Kubernetes and what can it do?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/#why-do-i-need-kubernetes-and-what-can-it-do)
 * [4 reasons you should use Kubernetes](https://www.infoworld.com/article/3173266/containers/4-reasons-you-should-use-kubernetes.html)
 
+## Articles based on the ks series
+
+* [Adopting Kubernetes step by step](https://medium.com/ingeniouslysimple/adopting-kubernetes-step-by-step-f93093c13dfe)
+* [Deploying Kubernetes applications with Helm](https://medium.com/ingeniouslysimple/deploying-kubernetes-applications-with-helm-81c9c931f9d3)
+
 ## Prerequisites
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install/)
@@ -37,8 +42,6 @@ To deploy, scale and manage containerized applications.
 1. start following the series or go directly to the one you are interested in.
 
 ## Evolution of our app
-
-[ks0: an introduction to our ks series](./ks0/ks0.md)
 
 1. [ks1: build a React app with kubernetes](./ks1/ks1.md)
 1. [ks2: make minikube detect React code changes](./ks2/ks2.md)
