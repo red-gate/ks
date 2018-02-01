@@ -51,5 +51,6 @@ To deploy, scale and manage containerized applications.
 1. [ks6: create a test environment using helm](./ks6/ks6.md)
 1. [ks7: create an in memory Todo list application](./ks7/ks7.md)
 1. [ks8-1: create a database in the K8S cluster for the Todo list data](./ks8-1/ks8-1.md)
+1. [ks8-2: use a database external to the K8s cluster for the Todo list data](./ks8-2/ks8-2.md)
 1. ...
 1. create a prod environment
