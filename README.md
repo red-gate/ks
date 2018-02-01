@@ -14,6 +14,11 @@ To deploy, scale and manage containerized applications.
 * [Why do I need Kubernetes and what can it do?](https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/#why-do-i-need-kubernetes-and-what-can-it-do)
 * [4 reasons you should use Kubernetes](https://www.infoworld.com/article/3173266/containers/4-reasons-you-should-use-kubernetes.html)
 
+## Articles based on the ks series
+
+* [Adopting Kubernetes step by step](https://medium.com/ingeniouslysimple/adopting-kubernetes-step-by-step-f93093c13dfe)
+* [Deploying Kubernetes applications with Helm](https://medium.com/ingeniouslysimple/deploying-kubernetes-applications-with-helm-81c9c931f9d3)
+
 ## Prerequisites
 
 * [Yarn](https://yarnpkg.com/lang/en/docs/install/)
@@ -38,8 +43,6 @@ To deploy, scale and manage containerized applications.
 
 ## Evolution of our app
 
-[ks0: an introduction to our ks series](./ks0/ks0.md)
-
 1. [ks1: build a React app with kubernetes](./ks1/ks1.md)
 1. [ks2: make minikube detect React code changes](./ks2/ks2.md)
 1. [ks3: add a python web server that hosts an API](./ks3/ks3.md)
@@ -47,5 +50,6 @@ To deploy, scale and manage containerized applications.
 1. [ks5: use helm to deploy the application](./ks5/ks5.md)
 1. [ks6: create a test environment using helm](./ks6/ks6.md)
 1. [ks7: create an in memory Todo list application](./ks7/ks7.md)
+1. [ks8-1: create a database in the K8S cluster for the Todo list data](./ks8-1/ks8-1.md)
 1. ...
 1. create a prod environment
