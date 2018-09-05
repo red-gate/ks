@@ -112,7 +112,7 @@ So that we get [hot reloading](https://facebook.github.io/react-native/blog/2016
 
 1. verify that hot reload works.
 
-    Make a change to `app.js` and notice the app reloads with the latest code.
+    Make a change to `App.js` and notice the app reloads with the latest code.
     If you attach the logs to ks2web you should see the following message
 
     ```bash
